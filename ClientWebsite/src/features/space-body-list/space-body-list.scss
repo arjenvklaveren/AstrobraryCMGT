@@ -2,17 +2,115 @@
     width: 100%;
     box-sizing: border-box;
     background-color: green;
-    display: flex;
-    gap: 0.5rem;
     padding: 0.5rem;
-    flex-direction: column;
+
+    .hierarchy-view-container {
+        display: flex;
+        flex-direction: column;
+        gap: 0rem;
+
+        .hierarchy-tree-invisible {
+            display: none;
+        }
+
+        .hierarchy-tree ul,
+        .hierarchy-tree li {
+            margin-top: 0;
+            margin-bottom: 0;
+            list-style-type: none;
+        }
+
+        .hierarchy-tree .mat-nested-tree-node div[role=group] {
+            margin-left: 20px;
+        }
+
+        .hierarchy-tree div[role=group]>.mat-nested-tree-node {
+            margin-left: 20px;
+        }
+
+        .mat-nested-tree-node {
+            margin: 5px;
+            padding: 0;
+            display: block;
+        }
+    }
+
+    .list-view-container {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .card-view-container {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 0.75rem;
+    }
 }
 
-.example-card {
+.hierarchy-card {
+    margin-bottom: 0.5rem;
     width: 100%;
+
+    .hierarchy-card-footer {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    .card-content {
+        display: flex;
+        gap: 1rem;
+        max-height: 5rem;
+        height: 5rem;
+
+        .card-image {
+            height: 100%;
+        }
+
+        .card-info-container {
+            background-color: red;
+            height: 100%;
+            width: 40%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .card-astronomer-container {
+            background-color: orange;
+            height: 100%;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-button-container {
+            background-color: blue;
+            height: 100%;
+            width: 15%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 0.3rem;
+            align-items: end;
+
+            button {
+                background-color: white;
+                font-size: 1rem;
+                text-decoration: none;
+                color: black;
+                height: 2rem;
+                cursor: pointer;
+                width: 50%;
+            }
+        }
+    }
 }
 
 .small-card {
+    width: 100%;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -47,95 +145,86 @@
 
     .mat-mdc-card-content {
         padding: 0;
-    }
-}
-
-.example-card-footer{
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-}
-
-.mat-nested-tree-node{
-    background-color: orange;
-    margin: 5px;
-    display: block;
-    border: solid 2px;
-}
-
-.card-content-container {
-    display: flex;
-    gap: 1rem;
-    max-height: 5rem;
-    height: 5rem;
-
-    .card-image {
-        height: 100%;
-    }
-
-    .card-info-container {
-        background-color: red;
-        height: 100%;
-        width: 40%;
         display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
-    
-    .card-astronomer-container {
-        background-color: orange;
-        height: 100%;
+        flex-direction: row;
+        justify-content: space-between;
         flex: 1;
-        display: flex;
         align-items: center;
-        justify-content: center;
-    }
 
-    .card-button-container {
-        background-color: blue;
-        height: 100%;
-        width: 15%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        gap: 0.3rem;
-        align-items: end;
+        .astronomer-info {
+            margin-left: 3rem;
+        }
 
-        button {
-            background-color: white;
-            font-size: 1rem;
-            text-decoration: none;
-            color: black;
-            height: 2rem;
-            cursor: pointer;
-            width: 50%;
+        .panel-buttons {
+            display: flex;
+            gap: 0.5rem;
+            margin-right: 0.5rem;
+
+            button {
+                background-color: white;
+                font-size: 1rem;
+                text-decoration: none;
+                color: black;
+                height: 2rem;
+                cursor: pointer;
+            }
         }
     }
 }
 
-.example-tree-invisible {
-  display: none;
-}
+.big-card {
 
-.example-tree ul,
-.example-tree li {
-  margin-top: 0;
-  margin-bottom: 0;
-  list-style-type: none;
-}
+    .mat-mdc-card-header {
+        padding: 0.5rem;
+        box-sizing: border-box;
+        width: 100%;
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.1));
+        z-index: 2;
+        position: absolute;
+        color: white;
 
-/*
- * This padding sets alignment of the nested nodes.
- */
-.example-tree .mat-nested-tree-node div[role=group] {
-    margin-left: 20px;
-}
+        .header-info {
+            flex: 1;
+        }
 
-/*
- * Padding for leaf nodes.
- * Leaf nodes need to have padding so as to align with other non-leaf nodes
- * under the same parent.
- */
-.example-tree div[role=group] > .mat-nested-tree-node {
-  margin-left: 20px;
+        .header-buttons {
+            width: 4rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+
+            button {
+                background-color: white;
+                font-size: 0.85rem;
+                text-decoration: none;
+                color: black;
+                height: 1.8rem;
+                cursor: pointer;
+                margin-left: auto;
+            }
+        }
+
+        .mat-mdc-card-subtitle {
+            color: white;
+        }
+
+
+    }
+
+    .mat-mdc-card-footer {
+        position: absolute;
+        bottom: 0;
+        z-index: 2;
+        display: flex;
+        width: 100%;
+        padding: 0.5rem;
+        box-sizing: border-box;
+        justify-content: start;
+        gap: 0.35rem;
+        flex-direction: row;
+    }
+
+    img {
+        width: 100%;
+    }
 }

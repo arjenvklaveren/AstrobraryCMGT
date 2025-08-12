@@ -1,7 +1,7 @@
 .main-container {
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Always 2 per row */
+    grid-template-columns: repeat(2, 1fr);
     gap: 0.75rem;
     box-sizing: border-box;
     padding: 0.75rem;
@@ -49,3 +49,4 @@
         }
     }
 }
+
