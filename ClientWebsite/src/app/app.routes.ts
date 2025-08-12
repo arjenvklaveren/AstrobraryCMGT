@@ -1,3 +1,18 @@
 import { Routes } from '@angular/router';
+import { SpaceBodyList } from '../features/space-body-list/space-body-list';
+import { HomePage } from '../features/home-page/home-page';
+import { AstronomersList } from '../features/astronomers-list/astronomers-list';
+import { ArAppPage } from '../features/ar-app-page/ar-app-page';
+import { ApiPage } from '../features/api-page/api-page';
+import { AboutPage } from '../features/about-page/about-page';
+import { SpaceBody } from '../features/space-body/space-body';
 
-export const routes: Routes = [];
+export const routes: Routes = [
+    { path: '', component: HomePage },
+    { path: 'bodies', component: SpaceBodyList },
+    { path: 'bodies/:id', component: SpaceBody },
+    { path: 'astronomers', component: AstronomersList },
+    { path: 'api', component: ApiPage },
+    { path: 'application', component: ArAppPage },
+    { path: 'about', component: AboutPage }
+];

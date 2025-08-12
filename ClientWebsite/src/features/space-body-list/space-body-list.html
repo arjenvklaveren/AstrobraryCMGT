@@ -1,0 +1,97 @@
+<app-filter-bar></app-filter-bar>
+<div class="main-container">
+
+    <!-- <mat-tree #tree 
+        [dataSource]="dataSource" 
+        [childrenAccessor]="childrenAccessor" 
+        class="example-tree">
+
+        <mat-nested-tree-node class="treeNode" 
+            *matTreeNodeDef="let node; when: hasChild"  
+            [cdkTreeNodeTypeaheadLabel]="node.name">
+            
+            <div class="mat-tree-node">
+
+                <mat-card class="example-card" appearance="outlined">
+
+                    <mat-card-content class="card-content-container">
+                        
+                        <img class="card-image" src="placeholder-square.png" alt="">
+
+                        <div class="card-info-container">
+                            <mat-card-title>{{node.name}} <mat-chip>Information</mat-chip> </mat-card-title>    
+                            <mat-chip-set aria-label="Chihuahua traits">
+                                <mat-chip>Tag</mat-chip>
+                                <mat-chip>Tag</mat-chip>
+                                <mat-chip>Tag</mat-chip>
+                                <mat-chip>Tag</mat-chip>
+                            </mat-chip-set>
+                        </div>
+
+                        <div class="card-astronomer-container">
+                            Discovered by: John Doe <br>
+                            Discovered on: 0001-01-01
+                        </div>
+
+                        <div class="card-button-container">
+                            <button>View</button>
+                            <button>Edit</button>
+                        </div>
+                    </mat-card-content>
+
+                    <mat-card-footer matTreeNodeToggle class="example-card-footer">
+                        @if(hasChild(0, node)){
+                        <button class="nodeButton" matIconButton [attr.aria-label]="'Toggle ' + node.name">
+                            <mat-icon class="mat-icon-rtl-mirror">
+                                {{tree.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                            </mat-icon>
+                        </button>
+                        <span> Child objects [?] </span>
+                        } @else{
+                        <button matIconButton disabled></button>
+                        }
+                    </mat-card-footer>
+
+                </mat-card>
+            </div>
+
+
+            <div [class.example-tree-invisible]="!tree.isExpanded(node)" role="group">
+                <ng-container matTreeNodeOutlet></ng-container>
+            </div>
+
+        </mat-nested-tree-node>
+    </mat-tree> -->
+
+    @for (i of [].constructor(10); track $index) {
+    <mat-card class="example-card small-card" appearance="outlined">
+        <mat-card-header>
+            <img mat-card-sm-image src="https://material.angular.dev/assets/img/examples/shiba2.jpg">
+            <mat-card-title-group>
+                <mat-card-title>Alpha centouri B</mat-card-title>
+                <mat-chip>Tag</mat-chip>
+                <mat-chip>Tag</mat-chip>
+                <mat-chip>Tag</mat-chip>
+                <mat-chip>Tag</mat-chip>
+            </mat-card-title-group>
+
+
+        </mat-card-header>
+        <mat-card-content>
+            The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan. 
+            A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally 
+            bred for hunting.
+        </mat-card-content>
+    </mat-card>
+    }
+    
+</div>
+
+<div>
+    <div>
+        <!-- flex-flow: nowrap -->
+    </div>
+    <div>
+        <!-- Not affected -->
+    </div>
+</div>
