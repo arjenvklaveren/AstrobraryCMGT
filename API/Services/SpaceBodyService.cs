@@ -6,8 +6,9 @@ namespace API.Services;
 
 public class SpaceBodyService(ISpaceBodyRepository spaceBodyRepository) : ISpaceBodyService
 {
-    public async Task<IEnumerable<SpaceBody>> GetAllAsync()
+    public async Task<IReadOnlyList<SpaceBody>> GetAllBodiesAsync()
     {
-        return await spaceBodyRepository.GetAllAsync();
+        var bodies = await spaceBodyRepository.GetAllAsync();
+        return bodies.ToList();
     }
 }

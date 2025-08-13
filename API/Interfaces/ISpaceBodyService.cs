@@ -5,5 +5,5 @@ namespace API.Interfaces;
 
 public interface ISpaceBodyService
 {
-    Task<IEnumerable<SpaceBody>> GetAllAsync();
+    Task<IReadOnlyList<SpaceBody>> GetAllBodiesAsync();
 }

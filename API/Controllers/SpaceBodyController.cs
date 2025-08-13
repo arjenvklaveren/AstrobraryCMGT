@@ -11,9 +11,9 @@ namespace API.Controllers
     public class SpaceBodyController(ISpaceBodyService spaceBodyService) : ControllerBase
     {
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<SpaceBody>>> GetAll()
+        public async Task<ActionResult<IReadOnlyList<SpaceBody>>> GetAllBodiesAsync()
         {
-            return Ok(await spaceBodyService.GetAllAsync());
+            return Ok(await spaceBodyService.GetAllBodiesAsync());
         }
     }
 }

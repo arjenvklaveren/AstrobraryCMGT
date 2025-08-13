@@ -1,15 +1,15 @@
 <app-filter-bar></app-filter-bar>
 
 <div class="main-container">
-    @for (i of [].constructor(10); track $index) {
+    @for (astronomer of astronomers(); track astronomer.id) {
     <!-- Cards with media area -->
     <mat-card class="example-card" appearance="outlined">
         <mat-card-header>
-            <img mat-card-sm-image src="placeholder-square.png">
+            <img mat-card-sm-image src="{{astronomer.imageUrl}}">
             <mat-card-title-group>
-                <mat-card-title>[John Matthew Doe]</mat-card-title>
-                <mat-card-title>[Researcher]</mat-card-title>
-                <mat-card-title>[Very handsome]</mat-card-title>
+                <mat-card-title>{{astronomer.name}}</mat-card-title>
+                <mat-card-title>{{AstronomerOccupation[astronomer.occupation]}}</mat-card-title>
+                <mat-card-title>{{astronomer.description}}</mat-card-title>
             </mat-card-title-group>
         </mat-card-header>
         <mat-card-content>
