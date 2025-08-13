@@ -12,4 +12,9 @@ public class AstronomerRepository(DatabaseContext context) : IAstronomerReposito
     {
         return await context.Astronomers.ToListAsync();
     }
+
+    public async Task<Astronomer?> GetByIdAsync(int id)
+    {
+        return await context.Astronomers.FindAsync(id);
+    }
 }

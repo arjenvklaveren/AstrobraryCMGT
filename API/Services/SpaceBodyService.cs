@@ -11,4 +11,9 @@ public class SpaceBodyService(ISpaceBodyRepository spaceBodyRepository) : ISpace
         var bodies = await spaceBodyRepository.GetAllAsync();
         return bodies.ToList();
     }
+
+    public async Task<SpaceBody?> GetBodyByIdAsync(int id)
+    {
+        return await spaceBodyRepository.GetByIdAsync(id);
+    }
 }

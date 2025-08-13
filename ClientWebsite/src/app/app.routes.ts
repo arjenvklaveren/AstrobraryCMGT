@@ -5,12 +5,12 @@ import { AstronomersList } from '../features/astronomers-list/astronomers-list';
 import { ArAppPage } from '../features/ar-app-page/ar-app-page';
 import { ApiPage } from '../features/api-page/api-page';
 import { AboutPage } from '../features/about-page/about-page';
-import { SpaceBody } from '../features/space-body/space-body';
+import { SpaceBodyInfo } from '../features/space-body/space-body-info';
 
 export const routes: Routes = [
     { path: '', component: HomePage },
     { path: 'bodies', component: SpaceBodyList },
-    { path: 'bodies/:id', component: SpaceBody },
+    { path: 'bodies/:id', component: SpaceBodyInfo },
     { path: 'astronomers', component: AstronomersList },
     { path: 'api', component: ApiPage },
     { path: 'application', component: ArAppPage },

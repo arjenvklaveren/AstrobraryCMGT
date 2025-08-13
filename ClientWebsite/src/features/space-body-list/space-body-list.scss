@@ -58,6 +58,10 @@
         cursor: pointer;
     }
 
+    &:not(:has(.nodeButton)) .card-content{
+        padding-bottom: 16px;
+    }
+
     .card-content {
         display: flex;
         gap: 1rem;

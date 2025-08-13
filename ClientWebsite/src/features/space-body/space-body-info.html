@@ -1,0 +1,85 @@
+@if(currentBody(); as body){
+<div class="main-container">
+    <div class="header-container">
+        <button routerLink="..">Back</button>
+        <h1>{{body.name}}</h1>
+        <mat-chip>Information</mat-chip>
+        <button class="edit-button">Edit</button>
+    </div>
+    <div class="content-container">
+        <div class="object-container">
+
+            <div class="object-info">
+                <img src="{{body.imageUrl}}" alt="" class="object-image">
+
+                <div>
+                    <p> {{body.mainInfo}} </p>
+                    <br>
+                    <p> {{body.subInfo}} </p>
+                </div>
+            </div>
+
+            <div class="object-data">
+                <div class="object-variables">
+                    <p>Name: {{body.name}}</p>
+                    <p>Type: {{SpaceBodyType[body.type]}}</p>
+                    <p>Discovery date: {{body.discoveryDate}}</p>
+                    <p>Age: {{body.age}}</p>
+                    <p>Mass: {{body.mass}}</p>
+                    <p>Luminosity: {{body.luminosity}}</p>
+                    <p>Diameter: {{body.diameter}}</p>
+                    <p>Velocity: {{body.velocity}}</p>
+                    <p>Temperature: {{body.temperature}}</p>
+                    <p>Distance from parent: {{body.distanceFromParent}}</p>
+                    <p>Rotation angle: {{body.rotationAngle}}</p>
+                    <p>Rotation speed: {{body.rotationSpeed}}</p>
+                    <p>Atmosphere thickness: {{body.atmosphereThickness}}</p>
+                    <p>Main color: {{body.mainColorHex}}</p>
+                    <p>Sub color: {{body.subColorHex}}</p>
+
+                    <!-- Ring system (TODO) -->
+
+
+                </div>
+
+                @if(bodyAstronomer(); as astronomer) {
+                <div class="object-astronomer">
+                    <div class="astronomer-header">
+                        <h3>Discovered by: {{astronomer.name}}</h3>
+                        <button>Edit</button>
+                    </div>
+                    <div class="astronomer-content">
+                        <img src="{{astronomer.imageUrl}}" alt="">
+                        <div>
+                            <p>Name: {{astronomer.name}}</p>
+                            <p>Occupation: {{AstronomerOccupation[astronomer.occupation]}}</p>
+                            <p>Description: {{astronomer.description}}</p>
+                            <p>Birth place: {{astronomer.birthPlace}}</p>
+                            <p>Date of birth: {{astronomer.dateOfBirth}}</p>
+                            <p>Gender: {{astronomer.gender}}</p>
+                            <p>Married: {{astronomer.married ? "Yes": "No"}}</p>
+                            <p>Telescope amount: {{astronomer.telescopeAmount}}</p>
+                        </div>
+                    </div>
+                </div>
+                }
+               
+            </div>
+        </div>
+
+        <div class="hierarchy-container">
+            <mat-tree class="hierarchy-tree" #tree [dataSource]="dataSource" [childrenAccessor]="childrenAccessor">
+
+                <mat-tree-node class="treeNode" *matTreeNodeDef="let node" matTreeNodePaddingIndent="15" matTreeNodePadding>
+                    <img src="placeholder-square.png" alt="">
+                    <span>{{node.name}}</span>
+                    <button>Go</button>
+                </mat-tree-node>
+
+            </mat-tree>
+        </div>
+
+    </div>
+</div>    
+}
+

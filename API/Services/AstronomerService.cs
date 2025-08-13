@@ -11,4 +11,9 @@ public class AstronomerService(IAstronomerRepository astronomerRepository) : IAs
         var astronomers = await astronomerRepository.GetAllAsync();
         return astronomers.ToList();
     }
+
+    public async Task<Astronomer?> GetAstronomerByIdAsync(int id)
+    {
+        return await astronomerRepository.GetByIdAsync(id);
+    }
 }

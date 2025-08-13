@@ -6,4 +6,5 @@ namespace API.Interfaces;
 public interface ISpaceBodyRepository
 {
     Task<IEnumerable<SpaceBody>> GetAllAsync();
+    Task<SpaceBody?> GetByIdAsync(int id);
 }

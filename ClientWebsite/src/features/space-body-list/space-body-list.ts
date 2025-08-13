@@ -1,47 +1,67 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { FilterBar } from "../../components/filter-bar/filter-bar";
 import { MatTreeModule } from '@angular/material/tree';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
+import { SpacebodyService } from '../../services/spacebody-service';
+import { SpaceBody } from '../../types/SpaceBody';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-space-body-list',
-  imports: [FilterBar, MatTreeModule, MatCardModule, MatIconModule, MatButtonModule, MatChipsModule],
+  imports: [FilterBar, MatTreeModule, MatCardModule, MatIconModule, MatButtonModule, MatChipsModule, RouterLink],
   templateUrl: './space-body-list.html',
   styleUrl: './space-body-list.scss'
 })
-export class SpaceBodyList {
-  dataSource = EXAMPLE_DATA;
+export class SpaceBodyList implements OnInit {
+  spacebodyService = inject(SpacebodyService);
 
-  childrenAccessor = (node: FoodNode) => node.children ?? [];
+  spaceBodies = signal<SpaceBody[]>([]);
 
-  hasChild = (_: number, node: FoodNode) => !!node.children && node.children.length > 0;
+  childrenAccessor = (node: SpaceBody) => node.children ?? [];
+  hasChild = (_: number, node: SpaceBody) => !!node.children && node.children.length > 0;
+
+  ngOnInit(): void {
+    this.getBodies();
+  }
+
+  getBodies() {
+    this.spacebodyService.getBodies().subscribe({
+      next: result => {
+        this.spaceBodies.set(result);
+        this.transformDataToHierarchy();
+      }
+    });
+  }
+
+  transformDataToHierarchy() {
+    
+    var bodyHashMap = new Map<number, SpaceBody>();
+
+    this.spaceBodies().forEach(p => {
+      bodyHashMap.set(p.id, { ...p, children: [] });
+    });
+
+    bodyHashMap.forEach(b => {
+      if(b.parentId != null) {
+        var parent = bodyHashMap.get(b.parentId);
+        if(parent && !hasCircularDependency(b, new Set([b.id]))) parent?.children.push(b);
+        else b.parentId = null;
+      }
+    });
+
+    function hasCircularDependency(body: SpaceBody, path: Set<number>): boolean {
+      var parent = bodyHashMap.get(body.parentId!);
+      if(path.has(parent!.id)) return true;
+      else path.add(parent!.id);
+      if(!parent?.parentId) return false;
+      return hasCircularDependency(parent, path);
+    }
+
+    var outArray = Array.from(bodyHashMap.values()).filter(b => !b.parentId);
+    this.spaceBodies.set(outArray);
+    console.log(this.spaceBodies());
+  }
 }
-
-interface FoodNode {
-  name: string;
-  children?: FoodNode[];
-}
-
-const EXAMPLE_DATA: FoodNode[] = [
-  {
-    name: 'Fruit',
-    children: [{name: 'Apple'}, {name: 'Banana'}, {name: 'Fruit loops'}],
-  },
-  {
-    name: 'Vegetables',
-    children: [
-      {
-        name: 'Green',
-        children: [{name: 'Broccoli'}, {name: 'Brussels sprouts'}],
-      },
-      {
-        name: 'Orange',
-        children: [{name: 'Pumpkins'}, {name: 'Carrots'}],
-      },
-    ],
-  },
-];
-

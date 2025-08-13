@@ -14,5 +14,13 @@ namespace API.Controllers
         {
             return Ok(await astronomerService.GetAllAstronomersAsync());
         }
+
+         [HttpGet("{id}")]
+        public async Task<ActionResult<SpaceBody>> GetAstronomerById(int id)
+        {
+            var astronomer = await astronomerService.GetAstronomerByIdAsync(id);
+            if (astronomer != null) return Ok(astronomer);
+            return NotFound("Astronomer not found");
+        }
     }
 }

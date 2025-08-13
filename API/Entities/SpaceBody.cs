@@ -11,7 +11,7 @@ public class SpaceBody
     public required DateOnly DiscoveryDate { get; set; }
     public int Age { get; set; }
     public string? ImageUrl { get; set; }
-    public string? ParentId { get; set; }
+    public int? ParentId { get; set; }
     public required SpaceBodyType Type { get; set; }
     public required string MainInfo { get; set; }
     public string? SubInfo { get; set; }

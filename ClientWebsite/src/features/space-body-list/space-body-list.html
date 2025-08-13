@@ -2,7 +2,7 @@
 <div class="main-container">
 
     <div class="hierarchy-view-container">
-        <mat-tree #tree [dataSource]="dataSource" [childrenAccessor]="childrenAccessor" class="hierarchy-tree">
+        <mat-tree #tree [dataSource]="spaceBodies()" [childrenAccessor]="childrenAccessor" class="hierarchy-tree">
     
             <mat-nested-tree-node class="treeNode" *matTreeNodeDef="let node; when: hasChild"
                 [cdkTreeNodeTypeaheadLabel]="node.name">
@@ -13,7 +13,7 @@
     
                         <mat-card-content class="card-content">
     
-                            <img class="card-image" src="placeholder-square.png" alt="">
+                            <img class="card-image" src="{{node.imageUrl}}" alt="">
     
                             <div class="card-info-container">
                                 <mat-card-title>{{node.name}} <mat-chip>Information</mat-chip> </mat-card-title>
@@ -31,7 +31,7 @@
                             </div>
     
                             <div class="card-button-container">
-                                <button>View</button>
+                                <button routerLink="/bodies/{{node.id}}">View</button>
                                 <button>Edit</button>
                             </div>
                         </mat-card-content>
@@ -43,10 +43,8 @@
                                     {{tree.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
                                 </mat-icon>
                             </button>
-                            <span> Child objects [?] </span>
-                            } @else{
-                            <button matIconButton disabled></button>
-                            }
+                            <span> Child objects [{{node.children.length}}] </span>
+                            } 
                         </mat-card-footer>
     
                     </mat-card>
@@ -62,13 +60,12 @@
     </div>
     
     <!-- <div class="list-view-container">
-
-        @for (i of [].constructor(10); track $index) {
+        @for (body of spaceBodies(); track body.id) {
         <mat-card class="small-card" appearance="outlined">
             <mat-card-header>
-                <img mat-card-sm-image src="https://material.angular.dev/assets/img/examples/shiba2.jpg">
+                <img mat-card-sm-image src="{{body.imageUrl}}">
                 <mat-card-title-group>
-                    <mat-card-title>Alpha centouri B</mat-card-title>
+                    <mat-card-title>{{body.name}}</mat-card-title>
                     <mat-chip>Taggggg</mat-chip>
                     <mat-chip>Taggggg</mat-chip>
                     <mat-chip>Taggggg</mat-chip>

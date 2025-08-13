@@ -15,5 +15,13 @@ namespace API.Controllers
         {
             return Ok(await spaceBodyService.GetAllBodiesAsync());
         }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<SpaceBody>> GetBodyById(int id)
+        {
+            var spaceBody = await spaceBodyService.GetBodyByIdAsync(id);
+            if (spaceBody != null) return Ok(spaceBody);
+            return NotFound("Spacebody not found");
+        }
     }
 }

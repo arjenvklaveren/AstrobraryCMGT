@@ -12,4 +12,9 @@ public class SpaceBodyRepository(DatabaseContext context) : ISpaceBodyRepository
     {
         return await context.SpaceBodies.ToListAsync();
     }
+
+    public async Task<SpaceBody?> GetByIdAsync(int id)
+    {
+        return await context.SpaceBodies.FindAsync(id);
+    }
 }

@@ -13,4 +13,8 @@ export class AstronomerService {
   getAstronomers() {
     return this.http.get<Astronomer[]>(this.baseUrl + "astronomer");
   }
+
+  getAstronomer(id: number) {
+    return this.http.get<Astronomer>(this.baseUrl + "astronomer/" + id);
+  }
 }
