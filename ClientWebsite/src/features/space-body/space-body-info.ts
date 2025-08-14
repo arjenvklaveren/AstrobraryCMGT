@@ -21,31 +21,34 @@ export class SpaceBodyInfo implements OnInit {
   private astronomerService = inject(AstronomerService);
   private changeDetectorRef = inject(ChangeDetectorRef);
 
-  @ViewChild('tree',  { static: false }) tree!: MatTree<FoodNode>;
-  dataSource = EXAMPLE_DATA;
+  @ViewChild('tree',  { static: false }) tree!: MatTree<SpaceBody>;
+
+  treeDataSource = signal<SpaceBody[]>([]);
 
   SpaceBodyType = SpaceBodyType;
   AstronomerOccupation = AstronomerOccupation;
 
-  currentBodyId = this.route.snapshot.paramMap.get('id');
   currentBody = signal<SpaceBody | undefined>(null!);
   bodyAstronomer = signal<Astronomer | null>(null!);
 
-  childrenAccessor = (node: FoodNode) => node.children ?? [];
-  hasChild = (_: number, node: FoodNode) => !!node.children && node.children.length > 0;
+  childrenAccessor = (node: SpaceBody) => node.children ?? [];
+  hasChild = (_: number, node: SpaceBody) => !!node.children && node.children.length > 0;
   
   ngOnInit(): void {
-    this.getCurrentBody();
+
+    this.route.paramMap.subscribe(() => {
+      this.getCurrentBody();
+    });
+    
   }
 
   getCurrentBody() {
-    this.spacebodyService.getBody(Number(this.currentBodyId)).subscribe({
+    this.spacebodyService.getBody(Number(this.route.snapshot.paramMap.get('id'))).subscribe({
       next: result => {
         if(result == null) return;
         this.currentBody.set(result);
-        this.changeDetectorRef.detectChanges();
-        this.tree.expandAll();
         if(this.currentBody()?.discovererId != null) this.getAstronomer();
+        this.getSpaceBodyHierarchy();
       }
     })
   }
@@ -57,30 +60,14 @@ export class SpaceBodyInfo implements OnInit {
       }
     });
   }
+
+  getSpaceBodyHierarchy() {
+    this.spacebodyService.getBodyHierarchy(this.currentBody()?.id!).subscribe({
+      next: result => {
+        this.treeDataSource.set([result]);
+        this.changeDetectorRef.detectChanges();
+        this.tree.expandAll();
+      }
+    })
+  }
 }
-
-
-interface FoodNode {
-  name: string;
-  children?: FoodNode[];
-}
-
-const EXAMPLE_DATA: FoodNode[] = [
-  {
-    name: 'Fruit',
-    children: [{name: 'Apple'}, {name: 'Banana'}, {name: 'Fruit loops'}],
-  },
-  {
-    name: 'Vegetables',
-    children: [
-      {
-        name: 'Green',
-        children: [{name: 'Broccoli'}, {name: 'Brussels sprouts'}],
-      },
-      {
-        name: 'Orange',
-        children: [{name: 'Pumpkins'}, {name: 'Carrots'}],
-      },
-    ],
-  },
-];

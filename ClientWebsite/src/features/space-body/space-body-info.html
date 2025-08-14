@@ -21,6 +21,7 @@
 
             <div class="object-data">
                 <div class="object-variables">
+                    <h3>Space body</h3>
                     <p>Name: {{body.name}}</p>
                     <p>Type: {{SpaceBodyType[body.type]}}</p>
                     <p>Discovery date: {{body.discoveryDate}}</p>
@@ -37,9 +38,15 @@
                     <p>Main color: {{body.mainColorHex}}</p>
                     <p>Sub color: {{body.subColorHex}}</p>
 
-                    <!-- Ring system (TODO) -->
-
-
+                     @if(body.ringSystem; as ringSystem) {
+                        <h3>Ring system</h3>
+                        <p>Ring size: {{ringSystem.ringSize}}</p>
+                        <p>Ring distance: {{ringSystem.ringDistance}}</p>
+                        <p>Main color: {{ringSystem.ringMainColorHex}}</p>
+                        <p>Sub color: {{ringSystem.ringSubColorHex}}</p>
+                        <p>Detail color: {{ringSystem.ringDetailColorHex}}</p>
+                     }
+                    
                 </div>
 
                 @if(bodyAstronomer(); as astronomer) {
@@ -68,12 +75,15 @@
         </div>
 
         <div class="hierarchy-container">
-            <mat-tree class="hierarchy-tree" #tree [dataSource]="dataSource" [childrenAccessor]="childrenAccessor">
+            <mat-tree class="hierarchy-tree" #tree [dataSource]="treeDataSource()" [childrenAccessor]="childrenAccessor">
 
                 <mat-tree-node class="treeNode" *matTreeNodeDef="let node" matTreeNodePaddingIndent="15" matTreeNodePadding>
                     <img src="placeholder-square.png" alt="">
                     <span>{{node.name}}</span>
-                    <button>Go</button>
+                    @if(currentBody()?.id != node.id)
+                    { 
+                        <button routerLink="/bodies/{{node.id}}">Go</button> 
+                    }
                 </mat-tree-node>
 
             </mat-tree>

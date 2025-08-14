@@ -7,4 +7,5 @@ public interface ISpaceBodyRepository
 {
     Task<IEnumerable<SpaceBody>> GetAllAsync();
     Task<SpaceBody?> GetByIdAsync(int id);
+    Task<IEnumerable<SpaceBody>> GetAllChildrenAsync(int id);
 }

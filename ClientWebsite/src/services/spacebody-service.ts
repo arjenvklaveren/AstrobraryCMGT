@@ -17,4 +17,8 @@ export class SpacebodyService {
     getBody(id: number) {
       return this.http.get<SpaceBody>(this.baseUrl + "spacebody/" + id);
     }
+
+    getBodyHierarchy(id: number, full: boolean = true){
+      return this.http.get<SpaceBody>(this.baseUrl + "spacebody/" + id + "/hierarchy");
+    }
 }

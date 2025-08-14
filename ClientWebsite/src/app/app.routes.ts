@@ -10,7 +10,7 @@ import { SpaceBodyInfo } from '../features/space-body/space-body-info';
 export const routes: Routes = [
     { path: '', component: HomePage },
     { path: 'bodies', component: SpaceBodyList },
-    { path: 'bodies/:id', component: SpaceBodyInfo },
+    { path: 'bodies/:id', component: SpaceBodyInfo, runGuardsAndResolvers: 'paramsChange' },
     { path: 'astronomers', component: AstronomersList },
     { path: 'api', component: ApiPage },
     { path: 'application', component: ArAppPage },

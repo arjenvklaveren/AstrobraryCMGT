@@ -1,9 +1,9 @@
 using System;
-using System.ComponentModel.DataAnnotations.Schema;
+using API.Entities;
 
-namespace API.Entities;
+namespace API.DTO_s;
 
-public class SpaceBody
+public class SpaceBodyDTO
 {
     //General properties
     public int Id { get; set; }
@@ -30,16 +30,5 @@ public class SpaceBody
     public required string MainColorHex { get; set; }
     public string? SubColorHex { get; set; }
 
-    //Navigation properties
-    [ForeignKey(nameof(DiscovererId))]
-    public Astronomer Discoverer { get; set; } = null!;
-
-    public RingSystem? RingSystem { get; set; }
-}
-
-public enum SpaceBodyType
-{
-    Moon,
-    Planet,
-    Star,
+    public List<SpaceBodyDTO> Children { get; set; } = [];
 }
