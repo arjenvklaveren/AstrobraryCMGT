@@ -42,6 +42,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   @include mat.dialog-overrides((
     container-shape: rectangle,
   ));
+ @include mat.button-toggle-overrides((
+    label-text-line-height: 0px,
+    legacy-label-text-line-height: 0px,
+    height: 10px,
+  ));
 }
 
 //custom dialogs styling

@@ -2,15 +2,16 @@ using System;
 using API.DTO_s;
 using API.Entities;
 using API.Helpers.Extensions;
+using API.Helpers.Types;
 using API.Interfaces;
 
 namespace API.Services;
 
 public class SpaceBodyService(ISpaceBodyRepository spaceBodyRepository) : ISpaceBodyService
 {
-    public async Task<IReadOnlyList<SpaceBodyDTO>> GetAllBodiesAsync()
+    public async Task<IReadOnlyList<SpaceBodyDTO>> GetAllBodiesAsync(SpaceBodyFilterParams filterParams)
     {
-        var bodies = await spaceBodyRepository.GetAllAsync();
+        var bodies = await spaceBodyRepository.GetAllAsync(filterParams);
 
         return bodies
             .Select(body => body.ToDTO())

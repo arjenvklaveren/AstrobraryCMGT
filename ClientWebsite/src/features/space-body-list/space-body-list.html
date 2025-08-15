@@ -1,20 +1,21 @@
-<app-filter-bar includeViewToggle></app-filter-bar>
+<app-filter-bar (onFiltersChanges)="onFiltersChange()" [(viewToggleValues)]="viewToggleValues" [(filterParams)]="filterParams"></app-filter-bar>
 <div class="main-container">
 
+    @if(viewToggleValues()[0].selected){
     <div class="hierarchy-view-container">
-        <mat-tree #tree [dataSource]="spaceBodies()" [childrenAccessor]="childrenAccessor" class="hierarchy-tree">
-    
+        <mat-tree #tree [dataSource]="spaceBodiesHierarchy()" [childrenAccessor]="childrenAccessor" class="hierarchy-tree">
+
             <mat-nested-tree-node class="treeNode" *matTreeNodeDef="let node; when: hasChild"
                 [cdkTreeNodeTypeaheadLabel]="node.name">
-    
+
                 <div class="mat-tree-node">
-    
+
                     <mat-card class="hierarchy-card" appearance="outlined">
-    
+
                         <mat-card-content class="card-content">
-    
+
                             <img class="card-image" src="{{node.imageUrl}}" alt="">
-    
+
                             <div class="card-info-container">
                                 <mat-card-title>{{node.name}} <mat-chip>Information</mat-chip> </mat-card-title>
                                 <mat-chip-set aria-label="Chihuahua traits">
@@ -24,18 +25,18 @@
                                     <mat-chip>Tag</mat-chip>
                                 </mat-chip-set>
                             </div>
-    
+
                             <div class="card-astronomer-container">
                                 Discovered by: John Doe <br>
                                 Discovered on: 0001-01-01
                             </div>
-    
+
                             <div class="card-button-container">
                                 <button routerLink="/bodies/{{node.id}}">View</button>
                                 <button>Edit</button>
                             </div>
                         </mat-card-content>
-    
+
                         <mat-card-footer matTreeNodeToggle class="hierarchy-card-footer">
                             @if(hasChild(0, node)){
                             <button class="nodeButton" matIconButton [attr.aria-label]="'Toggle ' + node.name">
@@ -44,22 +45,24 @@
                                 </mat-icon>
                             </button>
                             <span> Child objects [{{node.children.length}}] </span>
-                            } 
+                            }
                         </mat-card-footer>
-    
+
                     </mat-card>
                 </div>
-    
-    
+
+
                 <div [class.hierarchy-tree-invisible]="!tree.isExpanded(node)" role="group">
                     <ng-container matTreeNodeOutlet></ng-container>
                 </div>
-    
+
             </mat-nested-tree-node>
         </mat-tree>
     </div>
-    
-    <!-- <div class="list-view-container">
+    }
+
+    @if(viewToggleValues()[1].selected){
+    <div class="list-view-container">
         @for (body of spaceBodies(); track body.id) {
         <mat-card class="small-card" appearance="outlined">
             <mat-card-header>
@@ -71,7 +74,7 @@
                     <mat-chip>Taggggg</mat-chip>
                     <mat-chip>Taggggg</mat-chip>
                 </mat-card-title-group>
-    
+
             </mat-card-header>
             <mat-card-content>
                 <div class="astronomer-info">
@@ -85,16 +88,18 @@
             </mat-card-content>
         </mat-card>
         }
-    </div> -->
+    </div>
+    }
 
-    <!-- <div class="card-view-container">
+    @if(viewToggleValues()[2].selected){
+    <div class="card-view-container">
 
-        @for (i of [].constructor(10); track $index) {
+        @for (body of spaceBodies(); track body.id) {
         <mat-card class="big-card" appearance="outlined">
             <mat-card-header>
 
                 <div class="header-info">
-                    <mat-card-title>Seggetrius A star</mat-card-title>
+                    <mat-card-title>{{body.name}}</mat-card-title>
                     <mat-card-subtitle>Astronomer</mat-card-subtitle>
                 </div>
                 <div class="header-buttons">
@@ -103,7 +108,7 @@
                 </div>
 
             </mat-card-header>
-            <img mat-card-image src="placeholder-square.png">
+            <img mat-card-image src="{{body.imageUrl}}">
             <mat-card-footer>
                 <mat-chip>Taggggg</mat-chip>
                 <mat-chip>Taggggg</mat-chip>
@@ -112,6 +117,7 @@
         </mat-card>
         }
 
-    </div> -->
+    </div>
+    }
 
 </div>

@@ -1,6 +1,7 @@
 using API.DTO_s;
 using API.Entities;
 using API.Helpers.Extensions;
+using API.Helpers.Types;
 using API.Interfaces;
 using API.Repositories;
 using Microsoft.AspNetCore.Http;
@@ -13,9 +14,9 @@ namespace API.Controllers
     public class SpaceBodyController(ISpaceBodyService spaceBodyService) : ControllerBase
     {
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<SpaceBodyDTO>>> GetAllBodiesAsync()
+        public async Task<ActionResult<IReadOnlyList<SpaceBodyDTO>>> GetAllBodiesAsync([FromQuery] SpaceBodyFilterParams filterParams)
         {
-            return Ok(await spaceBodyService.GetAllBodiesAsync());
+            return Ok(await spaceBodyService.GetAllBodiesAsync(filterParams));
         }
 
         [HttpGet("{id}")]

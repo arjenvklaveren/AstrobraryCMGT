@@ -6,8 +6,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
 import { SpacebodyService } from '../../services/spacebody-service';
-import { SpaceBody } from '../../types/SpaceBody';
+import { SpaceBody, SpaceBodyType } from '../../types/SpaceBody';
 import { RouterLink } from '@angular/router';
+import { SpaceBodyFilterParams } from '../../types/FilterParams';
+import { ViewToggleValue } from '../../types/ViewToggleValue';
 
 @Component({
   selector: 'app-space-body-list',
@@ -19,6 +21,28 @@ export class SpaceBodyList implements OnInit {
   spacebodyService = inject(SpacebodyService);
 
   spaceBodies = signal<SpaceBody[]>([]);
+  spaceBodiesHierarchy = signal<SpaceBody[]>([]);
+  
+  viewToggleValues = signal<ViewToggleValue[]>([
+    {
+      value: "Hierarchy",
+      icon: "class",
+      selected: true
+    },
+    {
+      value: "List",
+      icon: "theaters",
+      selected: false
+    },
+     {
+      value: "Card",
+      icon: "segment",
+      selected: false
+    },
+  ]);
+
+  filterParams = new SpaceBodyFilterParams();
+  SpaceBodyType = SpaceBodyType;
 
   childrenAccessor = (node: SpaceBody) => node.children ?? [];
   hasChild = (_: number, node: SpaceBody) => !!node.children && node.children.length > 0;
@@ -28,7 +52,7 @@ export class SpaceBodyList implements OnInit {
   }
 
   getBodies() {
-    this.spacebodyService.getBodies().subscribe({
+    this.spacebodyService.getBodies(this.filterParams).subscribe({
       next: result => {
         this.spaceBodies.set(result);
         this.transformDataToHierarchy();
@@ -37,10 +61,10 @@ export class SpaceBodyList implements OnInit {
   }
 
   transformDataToHierarchy() {
-    
+    this.spaceBodiesHierarchy.set(this.spaceBodies());
     var bodyHashMap = new Map<number, SpaceBody>();
 
-    this.spaceBodies().forEach(p => {
+    this.spaceBodiesHierarchy().forEach(p => {
       bodyHashMap.set(p.id, { ...p, children: [] });
     });
 
@@ -61,7 +85,10 @@ export class SpaceBodyList implements OnInit {
     }
 
     var outArray = Array.from(bodyHashMap.values()).filter(b => !b.parentId);
-    this.spaceBodies.set(outArray);
-    console.log(this.spaceBodies());
+    this.spaceBodiesHierarchy.set(outArray);
+  }
+
+  onFiltersChange() {
+    this.getBodies()
   }
 }

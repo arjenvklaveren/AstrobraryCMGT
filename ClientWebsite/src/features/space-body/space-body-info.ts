@@ -39,7 +39,6 @@ export class SpaceBodyInfo implements OnInit {
     this.route.paramMap.subscribe(() => {
       this.getCurrentBody();
     });
-    
   }
 
   getCurrentBody() {

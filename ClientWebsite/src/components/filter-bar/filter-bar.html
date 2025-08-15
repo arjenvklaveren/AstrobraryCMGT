@@ -1,11 +1,46 @@
 <div class="container">
-    <button class="filter-item">Placeholder</button>
-    <button class="filter-item">Placeholder</button>
-    <button class="filter-item">Placeholder</button>
-    <button class="filter-item">Placeholder</button>
+    <button class="filter-item">Add</button>
+    
+    @for(paramField of filterParamFields; track $index) {
 
-    @if(includeViewToggle()) {
-        <button class="filter-item view-toggle">Placeholder</button>
+        @if(paramField.type === TypeDetect.StringType){
+            <input (change)="onFilterChange()" [(ngModel)]="filterParamsAny[paramField.key]" type="text" 
+                placeholder="{{paramField.label}}">
+        }
+        @if(paramField.type === TypeDetect.NumberType) {
+            <input (change)="onFilterChange()" type="number" 
+                [(ngModel)]="filterParamsAny[paramField.key]" placeholder="{{paramField.label}}">
+        }
+        @if(paramField.type === TypeDetect.BoolType) {
+            <select #sel (change)="onFilterChange()" [(ngModel)]="filterParamsAny[paramField.key]">
+                <option [ngValue]="undefined" disabled selected hidden>{{paramField.label}}</option>
+                @if(filterParamsAny[paramField.key] != undefined) { <option [ngValue]="undefined">-</option> }
+                <option [ngValue]="true">Yes</option>
+                <option [ngValue]="false">No</option>
+            </select>
+        }
+        
+        @if(paramField.isEnum == true) {           
+            <select (change)="onFilterChange()" [(ngModel)]="filterParamsAny[paramField.key]">
+                <option [ngValue]="undefined" disabled selected hidden>{{paramField.label}}</option>
+                @if(filterParamsAny[paramField.key] != undefined) { <option [ngValue]="undefined">-</option> }
+            @for (option of getEnumValues(paramField.type); track option) {
+                <option value={{option}}>{{option}}</option>
+            }
+            </select>
+        }
+    }
+    <button>Reset</button>
+
+    @if(viewToggleValues().length > 0) {
+    <div class="filter-item view-toggle">
+        @for(viewToggleValue of viewToggleValues(); track $index){
+        <button [class.selected]="viewToggleValue.selected" matTooltip="{{viewToggleValue.value}}"
+            (click)="onSelectViewToggle(viewToggleValue)">
+            <mat-icon>{{viewToggleValue.icon}}</mat-icon>
+        </button>
+        }
+    </div>
     }
 
 </div>
