@@ -1,4 +1,5 @@
 using System;
+using System.Text.Json;
 using API.Data;
 using API.Entities;
 using API.Helpers.Types;
@@ -35,7 +36,11 @@ public class SpaceBodyRepository(DatabaseContext context) : ISpaceBodyRepository
             query = query.Where(x => x.Type == filterParams.BodyType);
         }
 
-        return await query.ToListAsync();
+        var sb = await context.SpaceBodies
+            .Include(x => x.RingSystem)
+            .FirstOrDefaultAsync(x => x.Id == 7);
+
+        return await query.Include(x => x.RingSystem).ToListAsync();
     }
 
     public async Task<SpaceBody?> GetByIdAsync(int id)
@@ -50,6 +55,13 @@ public class SpaceBodyRepository(DatabaseContext context) : ISpaceBodyRepository
         return await context.SpaceBodies
             .Include(x => x.RingSystem)
             .Where(x => x.ParentId == id)
+            .ToListAsync();
+    }
+
+    public async Task<IReadOnlyList<SpaceBody>> GetAllFromAstronomer(int astronomerId)
+    {
+        return await context.SpaceBodies
+            .Where(x => x.DiscovererId == astronomerId)
             .ToListAsync();
     }
 }

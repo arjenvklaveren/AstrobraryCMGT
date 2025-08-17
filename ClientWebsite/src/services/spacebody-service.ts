@@ -11,14 +11,16 @@ export class SpacebodyService {
     http = inject(HttpClient);
     baseUrl = environment.apiUrl;
   
-    getBodies(filterParams : SpaceBodyFilterParams) {
+    getBodies(filterParams : SpaceBodyFilterParams | null) {
 
       let params = new HttpParams();
-      if(filterParams.name) params = params.append('name', filterParams.name); 
-      if(filterParams.age) params = params.append('age', filterParams.age); 
-      if(filterParams.hasRings) params = params.append('hasRings', filterParams.hasRings); 
-      if(filterParams.bodyType) params = params.append('bodyType', filterParams.bodyType); 
-
+      if(filterParams != null) {
+        if(filterParams.name != null) params = params.append('name', filterParams.name); 
+        if(filterParams.age != null) params = params.append('age', filterParams.age); 
+        if(filterParams.hasRings != null) params = params.append('hasRings', filterParams.hasRings); 
+        if(filterParams.bodyType != null) params = params.append('bodyType', filterParams.bodyType); 
+      }
+     
       return this.http.get<SpaceBody[]>(this.baseUrl + "spacebody", {params});
     }
 
@@ -26,7 +28,21 @@ export class SpacebodyService {
       return this.http.get<SpaceBody>(this.baseUrl + "spacebody/" + id);
     }
 
-    getBodyHierarchy(id: number, full: boolean = true){
+    getBodyHierarchy(id: number, full: boolean = true) {
       return this.http.get<SpaceBody>(this.baseUrl + "spacebody/" + id + "/hierarchy");
+    }
+
+    updateBody(spaceBody: SpaceBody) {
+      console.log("UPDATING BODY");
+      console.log(spaceBody);
+    }
+
+    addNewBody(spaceBody: SpaceBody) {
+      console.log("ADDING BODY");
+      console.log(spaceBody);
+    }
+
+    removeBody(spaceBodyId: number) {
+      console.log("REMOVING BODY");
     }
 }

@@ -17,4 +17,18 @@ export class AstronomerService {
   getAstronomer(id: number) {
     return this.http.get<Astronomer>(this.baseUrl + "astronomer/" + id);
   }
+
+  updateAstronomer(astronomer: Astronomer) {
+      console.log("UPDATING ASTRONOMER");
+      console.log(astronomer);
+    }
+
+    addNewAstronomer(astronomer: Astronomer) {
+      console.log("ADDING ASTRONOMER");
+      console.log(astronomer);
+    }
+
+    removeAstronomer(astronomerId: Astronomer) {
+      console.log("REMOVING ASTRONOMER");
+    }
 }

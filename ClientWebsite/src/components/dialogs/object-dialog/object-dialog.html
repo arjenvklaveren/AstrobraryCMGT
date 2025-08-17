@@ -1,0 +1,26 @@
+<div mat-dialog-title>
+    <span>
+        @if(viewType == ObjectDialogViewType.Create) {Create new object}
+        @if(viewType == ObjectDialogViewType.Edit) {Edit object}
+        @if(viewType == ObjectDialogViewType.View) {View object}
+    </span>
+    <div class="dialog-title-buttons">
+        @if(data.viewType != ObjectDialogViewType.Create) {
+            <button (click)="toggleEditMode()">
+                {{viewType != ObjectDialogViewType.Edit ? "Edit" : "View" }} 
+            </button>
+        }
+        <button mat-dialog-close>X</button>
+    </div>
+</div>
+
+<mat-dialog-content>
+    <ng-container *ngComponentOutlet="partialContentComponent"></ng-container>
+</mat-dialog-content>
+
+<mat-dialog-actions [class.enableDelete]="viewType == ObjectDialogViewType.Edit">
+    @if(viewType == ObjectDialogViewType.Edit) {
+        <button (click)="onDialogDelete()">Delete</button>
+    }
+    <button (click)="onDialogConfirm()" mat-dialog-close>Confirm</button>
+</mat-dialog-actions>

@@ -64,4 +64,13 @@ public class SpaceBodyService(ISpaceBodyRepository spaceBodyRepository) : ISpace
 
         return spaceBodyDTO;
     }
+
+    public async Task<IReadOnlyList<SpaceBodyDTO>> GetAllBodiesOfAstronomer(int astronomerId)
+    {
+         var bodies = await spaceBodyRepository.GetAllFromAstronomer(astronomerId);
+
+        return bodies
+            .Select(body => body.ToDTO())
+            .ToList();
+    }
 }

@@ -1,0 +1,74 @@
+@if(astronomer != null) {
+<div class="main-container">
+    <div class="left-container">
+        <h3>Properties:</h3>
+
+        <div class="parameter-container">
+            <span class="parameter-label">Name:</span>
+            @if(dialogMain.viewType == ObjectDialogViewType.View) { <span>{{astronomer.name}}</span> }
+            @else { <input [(ngModel)]="astronomer.name" type="text"> }
+        </div>
+
+        <div class="parameter-container">
+            <span class="parameter-label">Date of birth:</span>
+            @if(dialogMain.viewType == ObjectDialogViewType.View) { <span>{{astronomer.dateOfBirth}}</span> }
+            @else { <input [(ngModel)]="astronomer.dateOfBirth" type="date"> }
+        </div>
+
+        <div class="parameter-container">
+            <span class="parameter-label">Birth place:</span>
+            @if(dialogMain.viewType == ObjectDialogViewType.View) { <span>{{astronomer.birthPlace}}</span> }
+            @else { <input [(ngModel)]="astronomer.birthPlace" type="text"> }
+        </div>
+
+         <div class="parameter-container">
+            <span class="parameter-label">Occupation:</span>
+            @if(dialogMain.viewType == ObjectDialogViewType.View) { <span>{{AstronomerOccupation[astronomer.occupation] }}</span> }
+            @else {
+                <select [(ngModel)]="astronomer.occupation">
+                    @for (option of getEnumValues(AstronomerOccupation); track option) {
+                        <option [ngValue]="option">{{ AstronomerOccupation[option] }}</option>
+                    }
+                </select>
+            }
+        </div>
+
+        <div class="parameter-container">
+            <span class="parameter-label">Description:</span>
+            @if(dialogMain.viewType == ObjectDialogViewType.View) { <span>{{astronomer.description}}</span> }
+            @else { <input [(ngModel)]="astronomer.description" type="text"> }
+        </div>
+
+         <div class="parameter-container">
+            <span class="parameter-label">Married:</span>
+            @if(dialogMain.viewType == ObjectDialogViewType.View) { <span>{{astronomer.married ? "Yes" : "No"}}</span> }
+            @else { <input [(ngModel)]="astronomer.married" type="checkbox"> }
+        </div>
+
+        <div class="parameter-container">
+            <span class="parameter-label">Gender:</span>
+            @if(dialogMain.viewType == ObjectDialogViewType.View) { <span>{{astronomer.gender}}</span> }
+            @else { <input [(ngModel)]="astronomer.gender" type="text"> }
+        </div>
+
+        <div class="parameter-container">
+            <span class="parameter-label">Telescopes:</span>
+            @if(dialogMain.viewType == ObjectDialogViewType.View) { <span>{{astronomer.telescopeAmount}}</span> }
+            @else { <input [(ngModel)]="astronomer.telescopeAmount" type="number"> }
+        </div>
+
+    </div>
+    <div class="right-container">
+
+        <div class="picture-container">
+            <h3>Image:</h3>
+            <img src="{{astronomer.imageUrl || 'placeholder-square.png'}}" alt="">
+            @if(dialogMain.viewType == ObjectDialogViewType.Edit || dialogMain.viewType == ObjectDialogViewType.Create) {
+                <input type="file">
+            } 
+        </div>   
+
+    </div>
+</div>
+}
+

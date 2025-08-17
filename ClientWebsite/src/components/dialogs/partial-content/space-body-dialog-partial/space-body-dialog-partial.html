@@ -1,0 +1,208 @@
+@if(spaceBody != null) {
+<div class="main-container">
+    <div class="left-container">
+        <h3>Properties:</h3>
+        <div class="parameter-container">
+            <span class="parameter-label">Name:</span>
+            @if(dialogMain.viewType == ObjectDialogViewType.View) { <span>{{spaceBody.name}}</span> }
+            @else { <input [(ngModel)]="spaceBody.name" type="text"> }
+            @if(spaceBody.id != null) { <span><b>Id: </b>{{spaceBody.id}}</span> }
+        </div>
+
+        <div class="parameter-container">
+            <span class="parameter-label">Age:</span>
+            @if(dialogMain.viewType == ObjectDialogViewType.View) { <span>{{spaceBody.age}}</span> }
+            @else { <input [(ngModel)]="spaceBody.age" type="number"> }
+        </div>
+
+        <div class="parameter-container">
+            <span class="parameter-label">Discovery date:</span>
+            @if(dialogMain.viewType == ObjectDialogViewType.View) { <span>{{spaceBody.discoveryDate}}</span> }
+            @else { <input [(ngModel)]="spaceBody.discoveryDate" type="date"> }
+        </div>
+
+        <div class="parameter-container">
+            <span class="parameter-label">Type:</span>
+            @if(dialogMain.viewType == ObjectDialogViewType.View) { <span>{{SpaceBodyType[spaceBody.type] }}</span> }
+            @else {
+                <select [(ngModel)]="spaceBody.type">
+                    @for (option of getEnumValues(SpaceBodyType); track option) {
+                        <option [ngValue]="option">{{ SpaceBodyType[option] }}</option>
+                    }
+                </select>
+            }
+        </div>
+        
+         <div class="parameter-container">
+            <span class="parameter-label">Parent:</span>
+            @if(dialogMain.viewType == ObjectDialogViewType.View) {
+                @if(parentSpaceBody) {
+                    <span>{{ parentSpaceBody.name }} | {{parentSpaceBody.id}}</span> 
+                } @else {
+                    <span>None</span>
+                }
+            }
+            @else {
+                <select [(ngModel)]="spaceBody.parentId">
+                    <option [ngValue]="null">None</option>
+                    @for (body of spaceBodies(); track body.id) {
+                        @if(body.id != spaceBody.id )
+                        { 
+                            <option [ngValue]="body.id">{{body.name}} | {{body.id}}</option> 
+                        } 
+                    }
+                </select>
+            }
+        </div>
+
+         <div class="parameter-container">
+            <span class="parameter-label">Discoverer:</span>
+            @if(dialogMain.viewType == ObjectDialogViewType.View) {
+                @if(discoverer) {
+                    <span>{{ discoverer.name }}</span> 
+                } @else {
+                    <span>None</span>
+                }
+            }
+            @else {
+                <select [(ngModel)]="spaceBody.discovererId">
+                    <option [ngValue]="null">None</option>
+                    @for (astronomer of astronomers(); track astronomer.id) {
+                        <option [ngValue]="astronomer.id">{{astronomer.name}}</option>  
+                    }
+                </select>
+            }
+        </div>
+
+        <div class="parameter-container">
+            <span class="parameter-label">Main info:</span>
+            @if(dialogMain.viewType == ObjectDialogViewType.View) { <span>{{spaceBody.mainInfo}}</span> }
+            @else { <textarea [(ngModel)]="spaceBody.mainInfo"></textarea> }
+        </div>
+
+        <div class="parameter-container">
+            <span class="parameter-label">Sub info:</span>
+            @if(dialogMain.viewType == ObjectDialogViewType.View) { <span>{{spaceBody.subInfo}}</span> }
+            @else { <textarea [(ngModel)]="spaceBody.subInfo"></textarea> }
+        </div>
+
+        <div class="parameter-container">
+            <span class="parameter-label">Mass:</span>
+            @if(dialogMain.viewType == ObjectDialogViewType.View) { <span>{{spaceBody.mass}}</span> }
+            @else { <input [(ngModel)]="spaceBody.mass" type="number"> }
+        </div>
+
+        <div class="parameter-container">
+            <span class="parameter-label">Luminosity:</span>
+            @if(dialogMain.viewType == ObjectDialogViewType.View) { <span>{{spaceBody.luminosity}}</span> }
+            @else { <input [(ngModel)]="spaceBody.luminosity" type="number"> }
+        </div>
+
+        <div class="parameter-container">
+            <span class="parameter-label">Diameter:</span>
+            @if(dialogMain.viewType == ObjectDialogViewType.View) { <span>{{spaceBody.diameter}}</span> }
+            @else { <input [(ngModel)]="spaceBody.diameter" type="number"> }
+        </div>
+
+        <div class="parameter-container">
+            <span class="parameter-label">Velocity:</span>
+            @if(dialogMain.viewType == ObjectDialogViewType.View) { <span>{{spaceBody.velocity}}</span> }
+            @else { <input [(ngModel)]="spaceBody.velocity" type="number"> }
+        </div>
+
+        <div class="parameter-container">
+            <span class="parameter-label">Temperature:</span>
+            @if(dialogMain.viewType == ObjectDialogViewType.View) { <span>{{spaceBody.temperature}}</span> }
+            @else { <input [(ngModel)]="spaceBody.temperature" type="number"> }
+        </div>
+
+        <div class="parameter-container">
+            <span class="parameter-label">Distance from parent:</span>
+            @if(dialogMain.viewType == ObjectDialogViewType.View) { <span>{{spaceBody.distanceFromParent}}</span> }
+            @else { <input [(ngModel)]="spaceBody.distanceFromParent" type="number"> }
+        </div>
+
+        <div class="parameter-container">
+            <span class="parameter-label">Rotation angle:</span>
+            @if(dialogMain.viewType == ObjectDialogViewType.View) { <span>{{spaceBody.rotationAngle}}</span> }
+            @else { <input [(ngModel)]="spaceBody.rotationAngle" type="number"> }
+        </div>
+
+        <div class="parameter-container">
+            <span class="parameter-label">Rotation speed:</span>
+            @if(dialogMain.viewType == ObjectDialogViewType.View) { <span>{{spaceBody.rotationSpeed}}</span> }
+            @else { <input [(ngModel)]="spaceBody.rotationSpeed" type="number"> }
+        </div>
+
+        <div class="parameter-container">
+            <span class="parameter-label">Atmosphere thickness:</span>
+            @if(dialogMain.viewType == ObjectDialogViewType.View) { <span>{{spaceBody.atmosphereThickness}}</span> }
+            @else { <input [(ngModel)]="spaceBody.atmosphereThickness" type="number"> }
+        </div>
+
+        <div class="parameter-container">
+            <span class="parameter-label">Main color:</span>
+            @if(dialogMain.viewType == ObjectDialogViewType.View) { <span>{{spaceBody.mainColorHex}}</span> }
+            @else { <input [(ngModel)]="spaceBody.mainColorHex" type="color"> }
+        </div>
+
+        <div class="parameter-container">
+            <span class="parameter-label">Sub color:</span>
+            @if(dialogMain.viewType == ObjectDialogViewType.View) { <span>{{spaceBody.subColorHex}}</span> }
+            @else { <input [(ngModel)]="spaceBody.subColorHex" type="color"> }
+        </div>
+
+    </div>
+    <div class="right-container">
+
+        <div class="picture-container">
+            <h3>Image:</h3>
+            <img src="{{spaceBody.imageUrl || 'placeholder-square.png'}}" alt="">
+            @if(dialogMain.viewType == ObjectDialogViewType.Edit || dialogMain.viewType == ObjectDialogViewType.Create) {
+                <input type="file">
+            } 
+        </div>
+        <div class="ringsystem-container">
+            <h3>Ringsystem:</h3>
+            @if(spaceBody.ringSystem == null) {
+                <span>None </span>
+                @if(dialogMain.viewType == ObjectDialogViewType.Edit || dialogMain.viewType == ObjectDialogViewType.Create) {
+                    <button (click)="addNewRingSystem()">Add</button>
+                }
+            } @else {
+
+                <div class="parameter-container">
+                    <span class="parameter-label">Ring distance:</span>
+                    @if(dialogMain.viewType == ObjectDialogViewType.View) { <span>{{spaceBody.ringSystem.ringDistance}}</span> }
+                    @else { <input [(ngModel)]="spaceBody.ringSystem.ringDistance" type="number"> }
+                </div>
+                
+                <div class="parameter-container">
+                    <span class="parameter-label">Ring size:</span>
+                    @if(dialogMain.viewType == ObjectDialogViewType.View) { <span>{{spaceBody.ringSystem.ringSize}}</span> }
+                    @else { <input [(ngModel)]="spaceBody.ringSystem.ringSize" type="number"> }
+                </div>
+                
+                <div class="parameter-container">
+                    <span class="parameter-label">Main color:</span>
+                    @if(dialogMain.viewType == ObjectDialogViewType.View) { <span>{{spaceBody.ringSystem.ringMainColorHex}}</span> }
+                    @else { <input [(ngModel)]="spaceBody.ringSystem.ringMainColorHex" type="color"> }
+                </div>
+                
+                <div class="parameter-container">
+                    <span class="parameter-label">Sub color:</span>
+                    @if(dialogMain.viewType == ObjectDialogViewType.View) { <span>{{spaceBody.ringSystem.ringSubColorHex}}</span> }
+                    @else { <input [(ngModel)]="spaceBody.ringSystem.ringSubColorHex" type="color"> }
+                </div>
+                
+                <div class="parameter-container">
+                    <span class="parameter-label">Detail color:</span>
+                    @if(dialogMain.viewType == ObjectDialogViewType.View) { <span>{{spaceBody.ringSystem.ringDetailColorHex}}</span> }
+                    @else { <input [(ngModel)]="spaceBody.ringSystem.ringDetailColorHex" type="color"> }
+                </div>
+            }
+        </div>
+    </div>
+</div>
+}
+

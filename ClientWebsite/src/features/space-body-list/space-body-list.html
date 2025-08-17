@@ -1,4 +1,11 @@
-<app-filter-bar (onFiltersChanges)="onFiltersChange()" [(viewToggleValues)]="viewToggleValues" [(filterParams)]="filterParams"></app-filter-bar>
+<app-filter-bar 
+    [objectDialogObjectType]="ObjectDialogObjectType.SpaceBody" 
+    (onFiltersChanges)="onFiltersChange()" 
+    [(viewToggleValues)]="viewToggleValues" 
+    [(filterParams)]="filterParams"
+    (onCreateObject)="onAddNewSpaceBody($event)">
+</app-filter-bar>
+
 <div class="main-container">
 
     @if(viewToggleValues()[0].selected){
@@ -33,7 +40,7 @@
 
                             <div class="card-button-container">
                                 <button routerLink="/bodies/{{node.id}}">View</button>
-                                <button>Edit</button>
+                                <button (click)="openEditDialog(node)">Edit</button>
                             </div>
                         </mat-card-content>
 

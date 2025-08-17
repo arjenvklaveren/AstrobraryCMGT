@@ -1,9 +1,9 @@
 export type Astronomer = {
-  id: number;
+  id: number | null;
   name: string;
   dateOfBirth: string;
   birthPlace: string;
-  imageUrl: string;
+  imageUrl: string | null;
   occupation: AstronomerOccupation;
   description: string;
   married: boolean;

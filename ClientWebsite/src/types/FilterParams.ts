@@ -7,8 +7,8 @@ export class FilterParams {
 }
 
 export class SpaceBodyFilterParams extends FilterParams {
-    @Field({ label: "Has rings?" }) hasRings?: boolean;
     @Field({ label: "Type", type: SpaceBodyType }) bodyType?: SpaceBodyType;
+    @Field({ label: "Has rings?" }) hasRings?: boolean;
 }
 
 export class AstronomerFilterParams extends FilterParams {

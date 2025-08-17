@@ -1,5 +1,5 @@
 <div class="container">
-    <button class="filter-item">Add</button>
+    <button (click)="openAddDialog()" class="filter-item">Add</button>
     
     @for(paramField of filterParamFields; track $index) {
 
@@ -25,7 +25,7 @@
                 <option [ngValue]="undefined" disabled selected hidden>{{paramField.label}}</option>
                 @if(filterParamsAny[paramField.key] != undefined) { <option [ngValue]="undefined">-</option> }
             @for (option of getEnumValues(paramField.type); track option) {
-                <option value={{option}}>{{option}}</option>
+                <option [ngValue]="option">{{paramField.type[option]}}</option>
             }
             </select>
         }

@@ -1,11 +1,11 @@
 import { RingSystem } from "./RingSystem";
 
 export type SpaceBody = {
-  id: number;
+  id: number | null;
   name: string;
   discoveryDate: string;
   age: number;
-  imageUrl: string;
+  imageUrl: string | null;
   parentId: number | null;
   type: SpaceBodyType;
   mainInfo: string;
@@ -21,9 +21,8 @@ export type SpaceBody = {
   atmosphereThickness: number;
   mainColorHex: string;
   subColorHex: string;
-  ringSystem: RingSystem;
-  discovererId: number;
-  discoverer: any;
+  ringSystem: RingSystem | null;
+  discovererId: number | null;
   children: SpaceBody[];
 }
 

@@ -1,4 +1,9 @@
-<app-filter-bar></app-filter-bar>
+<app-filter-bar
+    [objectDialogObjectType]="ObjectDialogObjectType.Astronomer"
+    (onFiltersChanges)="onFiltersChange()"
+    [(filterParams)]="filterParams"
+    (onCreateObject)="onAddNewAstronomer($event)">
+></app-filter-bar>
 
 <div class="main-container">
     @for (astronomer of astronomers(); track astronomer.id) {
@@ -14,8 +19,8 @@
         </mat-card-header>
         <mat-card-content>
             <div class="card-content-buttons">
-                <button (click)="openDialog()">View</button>
-                <button>Edit</button>
+                <button (click)="openDialog(astronomer, false)">View</button>
+                <button (click)="openDialog(astronomer, true)">Edit</button>
             </div>
             <div class="card-content-discoveries">
                 10 Planets, 20 Moons, 30 Suns, 5 Nebulae

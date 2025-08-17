@@ -1,6 +1,6 @@
 export type RingSystem = {
-    id: number;
-    spaceBodyId: number;
+    id: number | null;
+    spaceBodyId: number | null;
     ringDistance: number;
     ringSize: number;
     ringMainColorHex: string;

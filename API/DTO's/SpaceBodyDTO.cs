@@ -30,5 +30,7 @@ public class SpaceBodyDTO
     public required string MainColorHex { get; set; }
     public string? SubColorHex { get; set; }
 
+    public RingSystem? RingSystem { get; set; }
+
     public List<SpaceBodyDTO> Children { get; set; } = [];
 }

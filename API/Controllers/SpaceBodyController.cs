@@ -37,8 +37,26 @@ namespace API.Controllers
             if (spaceBody == null) return NotFound("Spacebody not found");
 
             SpaceBodyDTO? spaceBodyDTO = await spaceBodyService.GetSpaceBodyHierarchyAsync(spaceBody);
-            
+
             return Ok(spaceBodyDTO);
+        }
+        
+        [HttpPost("add")]
+        public async Task<ActionResult<SpaceBody>> AddSpaceBody(SpaceBody spaceBody)
+        {
+            return Ok(spaceBody);
+        }
+
+        [HttpPut("update")]
+        public async Task<ActionResult<SpaceBody>> UpdateSpaceBody(Astronomer spaceBody)
+        {
+            return Ok(spaceBody);
+        }
+
+        [HttpPost("delete/{id}")]
+        public async Task<ActionResult> RemoveSpaceBody(int id)
+        {
+            return Ok();
         }
     }
 }

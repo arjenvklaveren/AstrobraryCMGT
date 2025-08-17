@@ -32,6 +32,8 @@ public static class SpaceBodyExtensions
             AtmosphereThickness = spaceBody.AtmosphereThickness,
             MainColorHex = spaceBody.MainColorHex,
             SubColorHex = spaceBody.SubColorHex,
+
+            RingSystem = spaceBody.RingSystem
         };
     }
 }

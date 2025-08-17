@@ -1,0 +1,130 @@
+.object-dialog-container {
+    width: 50rem;
+    max-width: 50rem !important;
+    display: flex;
+
+    .mat-mdc-dialog-title {
+        display: flex;
+        flex-direction: row;
+        justify-content: start;
+        align-items: center;
+        padding-right: 12px;
+        padding-top: 8px;
+        padding-bottom: 8px;
+
+        &::before {
+            display: none;
+        }
+
+        .dialog-title-buttons {
+            height: 100%;
+            margin-left: auto;
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+    }
+
+    .mat-mdc-dialog-content {
+
+        .main-container {
+            display: flex;
+            flex-direction: row;
+            height: 25rem;
+            gap: 1.5rem;
+
+            .left-container {
+                width: 55%;
+                display: flex;
+                flex-direction: column;
+                overflow-y: auto;
+                height: 100%;
+                border-right: solid 1px gray;
+            }
+
+            .right-container {
+                display: flex;
+                flex-direction: column;
+                align-items: start;
+                gap: 0.5rem;
+                width: 45%;
+                overflow-y: auto;
+
+                .picture-container {
+                    img {
+                        width: 80%;
+                    }
+                }
+            }
+        }
+        
+        .parameter-container {
+            flex-shrink: 0;
+            width: 100%;
+            min-height: 2rem;
+            display: flex;
+            gap: 0.35rem;
+            justify-content: start;
+            align-items: start;
+            padding-left: 0rem;
+            padding-right: 1rem;
+            box-sizing: border-box;
+
+            input,
+            select,
+            textarea,
+            option {
+                flex: 1;
+                font-size: 1.025rem;
+                width: 100%;
+            }
+
+            textarea,
+            input[type=color] {
+                field-sizing: content;
+                margin-bottom: 0.5rem;
+            }
+
+            input[type=checkbox] {
+                flex: 0;
+                margin-top: 0.25rem;
+            }
+
+            .parameter-label {
+                font-style: italic;
+                min-width: fit-content;
+                font-size: 1.025rem;
+                white-space: nowrap;
+                overflow: hidden;
+                padding-right: 0.1rem;
+            }
+
+            span:first-of-type {
+                font-weight: bold;
+            }
+        }
+
+         h3{
+            font-size: 1.15rem;
+            text-decoration: underline;
+            font-weight: 500;
+            margin-bottom: 0.75rem;
+            margin-top: 0.5rem;
+        }
+
+        span{
+            font-size: 1.025rem;
+            margin-bottom: 0.5rem;
+        }
+    }
+
+    .mat-mdc-dialog-actions {
+        display: flex;
+        flex-direction: row;
+        justify-content: end;
+
+        &.enableDelete {
+            justify-content: space-between;
+        }
+    }
+}
