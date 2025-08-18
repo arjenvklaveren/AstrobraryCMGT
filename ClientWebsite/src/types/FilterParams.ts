@@ -1,5 +1,6 @@
 import { SpaceBodyType } from "./SpaceBody";
 import { Field } from "../helpers/decorators/field-decorator";
+import { AstronomerOccupation } from "./Astronomer";
 
 export class FilterParams {
     @Field() name?: string;
@@ -13,4 +14,5 @@ export class SpaceBodyFilterParams extends FilterParams {
 
 export class AstronomerFilterParams extends FilterParams {
     @Field({ label: "Is married?" }) isMarried?: boolean;
+    @Field( { type: AstronomerOccupation } ) occupation?: AstronomerOccupation;
 }

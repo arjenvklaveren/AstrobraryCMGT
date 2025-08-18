@@ -6,7 +6,7 @@ namespace API.Entities;
 public class SpaceBody
 {
     //General properties
-    public int Id { get; set; }
+    public int? Id { get; set; }
     public required string Name { get; set; }
     public required DateOnly DiscoveryDate { get; set; }
     public int DiscovererId { get; set; }

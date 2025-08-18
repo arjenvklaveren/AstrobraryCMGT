@@ -37,7 +37,7 @@ export class SpaceBodyDialogPartial implements OnInit{
   }
 
   loadDropdownValues() {
-    this.astronomerService.getAstronomers().subscribe({
+    this.astronomerService.getAstronomers(null).subscribe({
       next: result => {
         this.astronomers.set(result);
 

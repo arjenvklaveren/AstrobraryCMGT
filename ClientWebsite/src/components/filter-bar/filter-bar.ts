@@ -88,6 +88,11 @@ export class FilterBar implements OnInit{
     }
   }
 
+  resetFilters() {
+    this.filterParams.set(new FilterParams());
+    this.onFilterChange();
+  }
+
   get filterParamsAny(): any {
     return this.filterParams();
   }

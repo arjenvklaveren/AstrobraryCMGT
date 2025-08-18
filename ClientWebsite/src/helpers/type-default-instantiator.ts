@@ -6,7 +6,7 @@ export function getSpaceBodyDefault(): SpaceBody {
     return {
         id: null,
         name: "",
-        discoveryDate: "",
+        discoveryDate: "2000-01-01",
         age: 0,
         imageUrl: null,
         parentId: null,
@@ -46,7 +46,7 @@ export function getAstronomerDefault(): Astronomer {
     return {
         id: null,
         name: "",
-        dateOfBirth: "",
+        dateOfBirth: "2000-01-01",
         birthPlace: "",
         imageUrl: null,
         occupation: AstronomerOccupation.Scientist,

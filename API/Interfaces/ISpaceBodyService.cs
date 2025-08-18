@@ -12,4 +12,5 @@ public interface ISpaceBodyService
     Task<SpaceBodyDTO?> GetRootSpaceBodyByIdAsync(int id);
     Task<SpaceBodyDTO?> GetSpaceBodyHierarchyAsync(SpaceBodyDTO spaceBodyDTO);
     Task<IReadOnlyList<SpaceBodyDTO>> GetAllBodiesOfAstronomer(int astronomerId);
+    Task RemoveSpaceBodyAsync(int id);
 }

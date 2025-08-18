@@ -4,6 +4,7 @@ using API.Data;
 using API.Entities;
 using API.Helpers.Types;
 using API.Interfaces;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Repositories;
@@ -20,9 +21,9 @@ public class SpaceBodyRepository(DatabaseContext context) : ISpaceBodyRepository
         }
 
         if (filterParams.Age.HasValue)
-            {
-                query = query.Where(x => x.Age > filterParams.Age.Value);
-            }
+        {
+            query = query.Where(x => x.Age > filterParams.Age.Value);
+        }
             
         if (filterParams.HasRings.HasValue)
         {
@@ -36,10 +37,6 @@ public class SpaceBodyRepository(DatabaseContext context) : ISpaceBodyRepository
             query = query.Where(x => x.Type == filterParams.BodyType);
         }
 
-        var sb = await context.SpaceBodies
-            .Include(x => x.RingSystem)
-            .FirstOrDefaultAsync(x => x.Id == 7);
-
         return await query.Include(x => x.RingSystem).ToListAsync();
     }
 
@@ -50,7 +47,7 @@ public class SpaceBodyRepository(DatabaseContext context) : ISpaceBodyRepository
             .SingleOrDefaultAsync(x => x.Id == id);
     }
 
-    public async Task<IEnumerable<SpaceBody>> GetAllChildrenAsync(int id)
+    public async Task<IEnumerable<SpaceBody>> GetAllChildrenAsync(int? id)
     {
         return await context.SpaceBodies
             .Include(x => x.RingSystem)
@@ -63,5 +60,10 @@ public class SpaceBodyRepository(DatabaseContext context) : ISpaceBodyRepository
         return await context.SpaceBodies
             .Where(x => x.DiscovererId == astronomerId)
             .ToListAsync();
+    }
+
+    public async Task RemoveAsync(int id)
+    {
+        
     }
 }

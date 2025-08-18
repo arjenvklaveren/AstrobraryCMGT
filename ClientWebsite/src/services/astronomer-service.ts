@@ -1,7 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../environments/environment.development';
 import { Astronomer } from '../types/Astronomer';
+import { AstronomerFilterParams } from '../types/FilterParams';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +11,17 @@ export class AstronomerService {
   http = inject(HttpClient);
   baseUrl = environment.apiUrl;
 
-  getAstronomers() {
-    return this.http.get<Astronomer[]>(this.baseUrl + "astronomer");
+  getAstronomers(filterParams: AstronomerFilterParams | null) {
+
+    let params = new HttpParams();
+    if(filterParams != null) {
+       if(filterParams.name != null) params = params.append('name', filterParams.name); 
+        if(filterParams.age != null) params = params.append('age', filterParams.age); 
+        if(filterParams.isMarried != null) params = params.append('isMarried', filterParams.isMarried); 
+        if(filterParams.occupation != null) params = params.append('occupation', filterParams.occupation); 
+    }
+
+    return this.http.get<Astronomer[]>(this.baseUrl + "astronomer", {params});
   }
 
   getAstronomer(id: number) {
@@ -19,16 +29,14 @@ export class AstronomerService {
   }
 
   updateAstronomer(astronomer: Astronomer) {
-      console.log("UPDATING ASTRONOMER");
-      console.log(astronomer);
-    }
+    return this.http.put<Astronomer>(this.baseUrl + "astronomer/update", astronomer);
+  }
 
-    addNewAstronomer(astronomer: Astronomer) {
-      console.log("ADDING ASTRONOMER");
-      console.log(astronomer);
-    }
+  addNewAstronomer(astronomer: Astronomer) {
+    return this.http.post<Astronomer>(this.baseUrl + "astronomer/add", astronomer);
+  }
 
-    removeAstronomer(astronomerId: Astronomer) {
-      console.log("REMOVING ASTRONOMER");
-    }
+  removeAstronomer(astronomerId: number) {
+    return this.http.delete<Astronomer>(this.baseUrl + "astronomer/delete/" + astronomerId);
+  }
 }

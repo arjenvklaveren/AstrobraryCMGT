@@ -6,7 +6,6 @@ import { ArAppPage } from '../features/ar-app-page/ar-app-page';
 import { ApiPage } from '../features/api-page/api-page';
 import { AboutPage } from '../features/about-page/about-page';
 import { SpaceBodyInfo } from '../features/space-body/space-body-info';
-import { Test } from '../test/test';
 
 export const routes: Routes = [
     { path: '', component: HomePage },
@@ -16,5 +15,4 @@ export const routes: Routes = [
     { path: 'api', component: ApiPage },
     { path: 'application', component: ArAppPage },
     { path: 'about', component: AboutPage },
-    { path: 'test', component: Test },
 ];

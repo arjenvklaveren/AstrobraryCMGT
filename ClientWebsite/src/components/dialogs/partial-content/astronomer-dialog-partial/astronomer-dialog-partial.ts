@@ -29,10 +29,14 @@ export class AstronomerDialogPartial implements OnInit{
   
   onSubmit() {
     if(this.dialogMain.viewType == ObjectDialogViewType.Create) {
-      this.astronomerService.addNewAstronomer(this.astronomer!);
+      this.astronomerService.addNewAstronomer(this.astronomer!).subscribe(() => {
+        
+      });
     }
     else if(this.dialogMain.viewType == ObjectDialogViewType.Edit) {
-      this.astronomerService.updateAstronomer(this.astronomer!);
+      this.astronomerService.updateAstronomer(this.astronomer!).subscribe(() => {
+        
+      });
     }
   }
 

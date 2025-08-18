@@ -67,10 +67,15 @@ public class SpaceBodyService(ISpaceBodyRepository spaceBodyRepository) : ISpace
 
     public async Task<IReadOnlyList<SpaceBodyDTO>> GetAllBodiesOfAstronomer(int astronomerId)
     {
-         var bodies = await spaceBodyRepository.GetAllFromAstronomer(astronomerId);
+         var bodies = await spaceBodyRepository.GetAllFromAstronomer(astronomerId!);
 
         return bodies
             .Select(body => body.ToDTO())
             .ToList();
+    }
+
+    public Task RemoveSpaceBodyAsync(int id)
+    {
+        throw new NotImplementedException();
     }
 }

@@ -1,4 +1,5 @@
 using API.Entities;
+using API.Helpers.Types;
 using API.Interfaces;
 using API.Services;
 using Microsoft.AspNetCore.Http;
@@ -11,9 +12,9 @@ namespace API.Controllers
     public class AstronomerController(IAstronomerService astronomerService, ISpaceBodyService spaceBodyService) : ControllerBase
     {
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<Astronomer>>> GetAllAstronomersAsync()
+        public async Task<ActionResult<IReadOnlyList<Astronomer>>> GetAllAstronomersAsync([FromQuery] AstronomerFilterParams filterParams)
         {
-            return Ok(await astronomerService.GetAllAstronomersAsync());
+            return Ok(await astronomerService.GetAllAstronomersAsync(filterParams));
         }
 
         [HttpGet("{id}")]
@@ -31,21 +32,22 @@ namespace API.Controllers
         }
 
         [HttpPost("add")]
-        public async Task<ActionResult<Astronomer>> AddAstronomer(Astronomer astronomer)
-        {
-            return Ok(astronomer);
+        public async Task<ActionResult<int>> AddAstronomer(Astronomer astronomer)
+        {         
+            return Ok(await astronomerService.AddAstronomerAsync(astronomer));
         }
 
         [HttpPut("update")]
         public async Task<ActionResult<Astronomer>> UpdateAstronomer(Astronomer astronomer)
         {
-            return Ok(astronomer);
+            return Ok(await astronomerService.AddAstronomerAsync(astronomer));
         }
 
-        [HttpPost("delete/{id}")]
+        [HttpDelete("delete/{id}")]
         public async Task<ActionResult> RemoveAstronomer(int id)
         {
-            return Ok();
+            await astronomerService.RemoveAstronomerAsync(id);
+            return NoContent();
         }
     }
 }

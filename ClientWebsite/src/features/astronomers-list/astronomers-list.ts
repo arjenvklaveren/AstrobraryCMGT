@@ -34,7 +34,7 @@ export class AstronomersList implements OnInit {
   }
 
   loadAstronomers() {
-    this.astronomerService.getAstronomers().subscribe({
+    this.astronomerService.getAstronomers(this.filterParams).subscribe({
       next: result => {
         this.astronomers.set(result);
       }
@@ -59,6 +59,11 @@ export class AstronomersList implements OnInit {
       this.cdr.detectChanges(); 
 
       if(result.inputIsDeleted) {
+
+        this.astronomerService.removeAstronomer(astronomer.id!).subscribe(() => {
+          
+        });
+
         this.astronomers.update(astronomers =>
           astronomers.filter(a => a.id !== astronomer.id)
         );
