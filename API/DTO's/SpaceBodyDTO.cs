@@ -6,10 +6,10 @@ namespace API.DTO_s;
 public class SpaceBodyDTO
 {
     //General properties
-    public int? Id { get; set; }
+    public int Id { get; set; }
     public required string Name { get; set; }
     public required DateOnly DiscoveryDate { get; set; }
-    public int DiscovererId { get; set; }
+    public int? DiscovererId { get; set; }
     public int Age { get; set; }
     public string? ImageUrl { get; set; }
     public int? ParentId { get; set; }

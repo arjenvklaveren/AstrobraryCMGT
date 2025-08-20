@@ -52,7 +52,8 @@ public class AstronomerRepository(DatabaseContext context) : IAstronomerReposito
 
     public async Task<Astronomer> UpdateAsync(Astronomer astronomer)
     {
-        //TODO DOES NOT WORK YET
+        context.Astronomers.Update(astronomer);
+        await context.SaveChangesAsync();
         return astronomer;
     }
 

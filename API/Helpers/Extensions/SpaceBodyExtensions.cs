@@ -36,4 +36,34 @@ public static class SpaceBodyExtensions
             RingSystem = spaceBody.RingSystem
         };
     }
+    public static SpaceBody FromDto(this SpaceBodyDTO spaceBodyDto)
+    {
+        return new SpaceBody
+        {
+            Id = spaceBodyDto.Id,
+            Name = spaceBodyDto.Name,
+            DiscoveryDate = spaceBodyDto.DiscoveryDate,
+            DiscovererId = spaceBodyDto.DiscovererId,
+            Age = spaceBodyDto.Age,
+            ImageUrl = spaceBodyDto.ImageUrl,
+            ParentId = spaceBodyDto.ParentId,
+            Type = spaceBodyDto.Type,
+            MainInfo = spaceBodyDto.MainInfo,
+            SubInfo = spaceBodyDto.SubInfo,
+
+            Mass = spaceBodyDto.Mass,
+            Luminosity = spaceBodyDto.Luminosity,
+            Diameter = spaceBodyDto.Diameter,
+            Velocity = spaceBodyDto.Velocity,
+            Temperature = spaceBodyDto.Temperature,
+            DistanceFromParent = spaceBodyDto.DistanceFromParent,
+            RotationAngle = spaceBodyDto.RotationAngle,
+            RotationSpeed = spaceBodyDto.RotationSpeed,
+            AtmosphereThickness = spaceBodyDto.AtmosphereThickness,
+            MainColorHex = spaceBodyDto.MainColorHex,
+            SubColorHex = spaceBodyDto.SubColorHex,
+
+            RingSystem = spaceBodyDto.RingSystem
+        };
+    }
 }

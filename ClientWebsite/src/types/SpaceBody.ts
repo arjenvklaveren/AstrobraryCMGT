@@ -1,7 +1,7 @@
 import { RingSystem } from "./RingSystem";
 
 export type SpaceBody = {
-  id: number | null;
+  id?: number | null;
   name: string;
   discoveryDate: string;
   age: number;
@@ -27,7 +27,13 @@ export type SpaceBody = {
 }
 
 export enum SpaceBodyType {
-    Moon,
-    Planet,
-    Star
+    PlanetRock,
+    PlanetSand,
+    PlanetOcean,
+    PlanetGrass,
+    StarNeutron,
+    StarDwarf,
+    StarGiant,
+    MoonRegular,
+    MoonIrregular,
 }

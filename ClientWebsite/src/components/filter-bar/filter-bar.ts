@@ -66,8 +66,11 @@ export class FilterBar implements OnInit{
         viewType: ObjectDialogViewType.Create,
       },
       panelClass: 'object-dialog-container',
-    }).afterClosed().subscribe(() => {
-      this.onCreateObject.emit(inputObject);
+    }).afterClosed().subscribe((result) => {
+
+      if(result?.inputIsSubmitted!) {
+        this.onCreateObject.emit(inputObject);
+      }
     });
   }
 

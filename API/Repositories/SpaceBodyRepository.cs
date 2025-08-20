@@ -1,6 +1,7 @@
 using System;
 using System.Text.Json;
 using API.Data;
+using API.DTO_s;
 using API.Entities;
 using API.Helpers.Types;
 using API.Interfaces;
@@ -22,7 +23,7 @@ public class SpaceBodyRepository(DatabaseContext context) : ISpaceBodyRepository
 
         if (filterParams.Age.HasValue)
         {
-            query = query.Where(x => x.Age > filterParams.Age.Value);
+            query = query.Where(x => x.Age >= filterParams.Age.Value);
         }
             
         if (filterParams.HasRings.HasValue)
@@ -62,8 +63,28 @@ public class SpaceBodyRepository(DatabaseContext context) : ISpaceBodyRepository
             .ToListAsync();
     }
 
+    public async Task<SpaceBody> AddAsync(SpaceBody spaceBody)
+    {
+        context.Add(spaceBody);
+        await context.SaveChangesAsync();
+        return spaceBody;
+    }
+
+    public async Task<SpaceBody> UpdateAsync(SpaceBody spaceBody)
+    {
+        context.SpaceBodies.Update(spaceBody);
+        await context.SaveChangesAsync();
+        return spaceBody;
+    }
+
     public async Task RemoveAsync(int id)
     {
-        
+        var spaceBody = await context.SpaceBodies.FindAsync(id);
+
+        if (spaceBody != null)
+        {
+            context.Remove(spaceBody);
+            await context.SaveChangesAsync();
+        }
     }
 }

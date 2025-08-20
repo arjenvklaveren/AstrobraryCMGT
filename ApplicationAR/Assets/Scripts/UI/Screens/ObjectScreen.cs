@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class ObjectScreen : ScreenUI
@@ -8,6 +9,8 @@ public class ObjectScreen : ScreenUI
     [SerializeField] TextMeshProUGUI objectNameText;
     [SerializeField] private SpaceBodyListItem spaceBodyItemSmallPrefab;
     [SerializeField] private SetInformationAreaValues setInformationAreaValues;
+
+    [SerializeField] Button selectButton;
 
     [SerializeField] private GameObject informationAreasHolder;
     [SerializeField] private GameObject hierarchylistContentHolder;
@@ -23,6 +26,7 @@ public class ObjectScreen : ScreenUI
             refSpaceBody = body;
         }
         if (refSpaceBody != null) SetContent();
+        selectButton.onClick.AddListener(OnSelectObject);
     }
 
     protected override void OnClose()
@@ -42,6 +46,13 @@ public class ObjectScreen : ScreenUI
         SpaceBodyListItem newSpaceBodyListItem = Instantiate(spaceBodyItemSmallPrefab, hierarchylistContentHolder.transform);
         newSpaceBodyListItem.InstantiateItem(hierarchySpaceBody);
         InstantiateHierarchyElements(hierarchySpaceBody.Children, 1);
+    }
+
+    void OnSelectObject()
+    {
+        OverlayScreen overlayScreen = ScreenManager.Instance.GetMainCanvasGameObject().GetComponentInChildren<OverlayScreen>(true);
+        SpaceBodyManager.Instance.SetupScene(hierarchySpaceBody, refSpaceBody);
+        overlayScreen.Open();
     }
 
     void ClearListContent()

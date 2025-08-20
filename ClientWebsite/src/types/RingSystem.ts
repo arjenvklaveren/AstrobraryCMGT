@@ -1,5 +1,5 @@
 export type RingSystem = {
-    id: number | null;
+    id?: number | null;
     spaceBodyId: number | null;
     ringDistance: number;
     ringSize: number;

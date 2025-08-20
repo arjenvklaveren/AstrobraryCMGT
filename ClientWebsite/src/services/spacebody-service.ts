@@ -32,17 +32,19 @@ export class SpacebodyService {
       return this.http.get<SpaceBody>(this.baseUrl + "spacebody/" + id + "/hierarchy");
     }
 
-    updateBody(spaceBody: SpaceBody) {
-      console.log("UPDATING BODY");
-      console.log(spaceBody);
+    addNewBody(spaceBody: SpaceBody) {
+      delete spaceBody.id;
+      if(spaceBody.ringSystem) delete spaceBody.ringSystem.id;
+
+      return this.http.post<number>(this.baseUrl + "spacebody/add", spaceBody);
     }
 
-    addNewBody(spaceBody: SpaceBody) {
-      console.log("ADDING BODY");
-      console.log(spaceBody);
+    updateBody(spaceBody: SpaceBody) {   
+      if(spaceBody.ringSystem != null && spaceBody.ringSystem.id == null) delete spaceBody.ringSystem!.id;
+      return this.http.put<SpaceBody>(this.baseUrl + "spacebody/update", spaceBody);
     }
 
     removeBody(spaceBodyId: number) {
-      console.log("REMOVING BODY");
+      return this.http.delete<SpaceBody>(this.baseUrl + "spacebody/delete/" + spaceBodyId);
     }
 }

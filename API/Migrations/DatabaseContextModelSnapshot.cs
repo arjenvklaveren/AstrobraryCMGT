@@ -117,7 +117,7 @@ namespace API.Migrations
                     b.Property<int>("Diameter")
                         .HasColumnType("int");
 
-                    b.Property<int>("DiscovererId")
+                    b.Property<int?>("DiscovererId")
                         .HasColumnType("int");
 
                     b.Property<DateOnly>("DiscoveryDate")
@@ -194,8 +194,7 @@ namespace API.Migrations
                     b.HasOne("API.Entities.Astronomer", "Discoverer")
                         .WithMany()
                         .HasForeignKey("DiscovererId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Discoverer");
                 });

@@ -28,7 +28,7 @@ public class SpaceBodyListItem : MonoBehaviour
 
     void OnSelect()
     {
-        ObjectScreen objectScreen = ScreenManager.Instance.GetComponentInChildren<ObjectScreen>(true);
+        ObjectScreen objectScreen = ScreenManager.Instance.GetMainCanvasGameObject().GetComponentInChildren<ObjectScreen>(true);
         objectScreen.Open(refSpaceBody);
     }
 }

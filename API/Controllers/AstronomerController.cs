@@ -18,7 +18,7 @@ namespace API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<SpaceBody>> GetAstronomerById(int id)
+        public async Task<ActionResult<Astronomer>> GetAstronomerById(int id)
         {
             var astronomer = await astronomerService.GetAstronomerByIdAsync(id);
             if (astronomer != null) return Ok(astronomer);
@@ -26,7 +26,7 @@ namespace API.Controllers
         }
 
         [HttpGet("{id}/discoveries")]
-        public async Task<ActionResult<SpaceBody>> GetSpaceBodiesOfAstronomerById(int id)
+        public async Task<ActionResult<IReadOnlyList<SpaceBody>>> GetSpaceBodiesOfAstronomerById(int id)
         {
             return Ok(await spaceBodyService.GetAllBodiesOfAstronomer(id));
         }
@@ -40,7 +40,7 @@ namespace API.Controllers
         [HttpPut("update")]
         public async Task<ActionResult<Astronomer>> UpdateAstronomer(Astronomer astronomer)
         {
-            return Ok(await astronomerService.AddAstronomerAsync(astronomer));
+            return Ok(await astronomerService.UpdateAstronomerAsync(astronomer));
         }
 
         [HttpDelete("delete/{id}")]

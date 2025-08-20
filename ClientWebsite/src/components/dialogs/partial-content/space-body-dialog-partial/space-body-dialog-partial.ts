@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit, signal } from '@angular/core';
 import { ObjectDialog } from '../../object-dialog/object-dialog';
 import { FormsModule } from '@angular/forms';
 import { ObjectDialogViewType } from '../../../../types/ObjectDialogViewType';
@@ -11,11 +11,12 @@ import { CdkObserveContent } from "@angular/cdk/observers";
 
 @Component({
   selector: 'app-space-body-dialog-partial',
-  imports: [FormsModule, CdkObserveContent],
+  imports: [FormsModule],
   templateUrl: './space-body-dialog-partial.html',
   styleUrl: './space-body-dialog-partial.scss'
 })
 export class SpaceBodyDialogPartial implements OnInit{
+  protected cdr = inject(ChangeDetectorRef);
   protected dialogMain = inject(ObjectDialog); 
   protected astronomerService = inject(AstronomerService);
   protected spacebodyService = inject(SpacebodyService);
@@ -32,6 +33,8 @@ export class SpaceBodyDialogPartial implements OnInit{
   
   ngOnInit(): void {
     this.dialogMain.OnConfirm.subscribe(() => this.onSubmit());
+    this.dialogMain.OnDelete.subscribe(() => this.onDelete());
+
     if(this.dialogMain.inputObjectRef != null) this.spaceBody = this.dialogMain.inputObjectRef;
     this.loadDropdownValues();
   }
@@ -60,16 +63,33 @@ export class SpaceBodyDialogPartial implements OnInit{
 
   addNewRingSystem() {
     this.spaceBody!.ringSystem = getRingSystemDefault();
-    this.spaceBody!.ringSystem.spaceBodyId = this.spaceBody!.id;
+    this.spaceBody!.ringSystem.spaceBodyId = this.spaceBody!.id!;
   }
 
   onSubmit() {
     if(this.dialogMain.viewType == ObjectDialogViewType.Create) {
-      this.spacebodyService.addNewBody(this.spaceBody!);
+      this.spacebodyService.addNewBody(this.spaceBody!).subscribe({
+        next: newId => {
+          this.spaceBody!.id = newId;
+          this.dialogMain.dialogRef.close( { inputIsSubmitted: true } );
+          this.dialogMain.updateSourceInputObject();
+          this.cdr.detectChanges();
+        }
+      });
     }
     else if(this.dialogMain.viewType == ObjectDialogViewType.Edit) {
-      this.spacebodyService.updateBody(this.spaceBody!);
+      this.spacebodyService.updateBody(this.spaceBody!).subscribe(() => {
+        this.dialogMain.dialogRef.close( { inputIsSubmitted: true } );
+        this.dialogMain.updateSourceInputObject();
+        this.cdr.detectChanges();
+      });
     }
+  }
+
+  onDelete() {
+    this.spacebodyService.removeBody(this.spaceBody!.id!).subscribe(() => {
+        this.dialogMain.dialogRef.close( { inputIsDeleted: true } );
+    });
   }
 
   getEnumValues(inputEnum: any) {

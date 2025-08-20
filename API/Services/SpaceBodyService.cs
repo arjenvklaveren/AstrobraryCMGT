@@ -74,8 +74,21 @@ public class SpaceBodyService(ISpaceBodyRepository spaceBodyRepository) : ISpace
             .ToList();
     }
 
-    public Task RemoveSpaceBodyAsync(int id)
+    public async Task<int?> AddSpaceBodyAsync(SpaceBodyDTO spaceBody)
     {
-        throw new NotImplementedException();
+        SpaceBody body = await spaceBodyRepository.AddAsync(spaceBody.FromDto());
+        return body.Id;
+    }
+
+    public async Task<SpaceBodyDTO> UpdateSpaceBodyAsync(SpaceBodyDTO spaceBody)
+    {
+        SpaceBody body = spaceBody.FromDto();
+        await spaceBodyRepository.UpdateAsync(body);
+        return body.ToDTO(); 
+    }
+
+    public async Task RemoveSpaceBodyAsync(int id)
+    {
+        await spaceBodyRepository.RemoveAsync(id);
     }
 }

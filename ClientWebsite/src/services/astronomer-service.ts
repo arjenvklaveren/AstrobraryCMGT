@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { environment } from '../environments/environment.development';
 import { Astronomer } from '../types/Astronomer';
 import { AstronomerFilterParams } from '../types/FilterParams';
+import { SpaceBody } from '../types/SpaceBody';
 
 @Injectable({
   providedIn: 'root'
@@ -33,10 +34,15 @@ export class AstronomerService {
   }
 
   addNewAstronomer(astronomer: Astronomer) {
-    return this.http.post<Astronomer>(this.baseUrl + "astronomer/add", astronomer);
+    delete astronomer.id;
+    return this.http.post<number>(this.baseUrl + "astronomer/add", astronomer);
   }
 
   removeAstronomer(astronomerId: number) {
     return this.http.delete<Astronomer>(this.baseUrl + "astronomer/delete/" + astronomerId);
+  }
+
+  getDiscoveries(astronomerId: number) {
+    return this.http.get<SpaceBody[]>(this.baseUrl + "astronomer/" + astronomerId + "/discoveries");
   }
 }

@@ -6,6 +6,7 @@ public class ScreenManager : MonoBehaviour
 {
     public static ScreenManager Instance { get; private set; }
 
+    [SerializeField] GameObject mainCanvasGameObject;
     [SerializeField] ScreenUI startupScreen;
     private ScreenUI currentScreen;
 
@@ -24,4 +25,5 @@ public class ScreenManager : MonoBehaviour
     public void SetCurrentScreen(ScreenUI screen) { currentScreen = screen; }
     public ScreenUI GetCurrentScreen() { return currentScreen; }
     public bool HasScreenActive() { return currentScreen != null; }
+    public GameObject GetMainCanvasGameObject() { return mainCanvasGameObject; }
 }

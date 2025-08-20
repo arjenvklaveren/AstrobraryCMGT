@@ -6,7 +6,7 @@ namespace API.Helpers.Types;
 public class SpaceBodyFilterParams
 {
     public string? Name { get; set; }
-    public int? Age { get; set; } = 0;
+    public int? Age { get; set; }
     public bool? HasRings { get; set; }
     public SpaceBodyType? BodyType { get; set; }
 }

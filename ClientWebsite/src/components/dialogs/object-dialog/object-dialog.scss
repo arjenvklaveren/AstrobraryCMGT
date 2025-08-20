@@ -102,19 +102,19 @@
             span:first-of-type {
                 font-weight: bold;
             }
+
+            span{
+                font-size: 1.025rem;
+                margin-bottom: 0.5rem;
+            }
         }
 
-         h3{
+        h3{
             font-size: 1.15rem;
             text-decoration: underline;
             font-weight: 500;
             margin-bottom: 0.75rem;
             margin-top: 0.5rem;
-        }
-
-        span{
-            font-size: 1.025rem;
-            margin-bottom: 0.5rem;
         }
     }
 

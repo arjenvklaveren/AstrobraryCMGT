@@ -10,7 +10,7 @@ export function getSpaceBodyDefault(): SpaceBody {
         age: 0,
         imageUrl: null,
         parentId: null,
-        type: SpaceBodyType.Planet,
+        type: SpaceBodyType.PlanetRock,
         mainInfo: "",
         subInfo: "",
         mass: 0,

@@ -42,21 +42,22 @@ namespace API.Controllers
         }
         
         [HttpPost("add")]
-        public async Task<ActionResult<SpaceBody>> AddSpaceBody(SpaceBody spaceBody)
+        public async Task<ActionResult<int>> AddSpaceBody(SpaceBodyDTO spaceBody)
         {
-            return Ok(spaceBody);
+            return Ok(await spaceBodyService.AddSpaceBodyAsync(spaceBody));
         }
 
         [HttpPut("update")]
-        public async Task<ActionResult<SpaceBody>> UpdateSpaceBody(Astronomer spaceBody)
+        public async Task<ActionResult<SpaceBodyDTO>> UpdateSpaceBody(SpaceBodyDTO spaceBody)
         {
-            return Ok(spaceBody);
+            return Ok(await spaceBodyService.UpdateSpaceBodyAsync(spaceBody));
         }
 
-        [HttpPost("delete/{id}")]
+        [HttpDelete("delete/{id}")]
         public async Task<ActionResult> RemoveSpaceBody(int id)
         {
-            return Ok();
+            await spaceBodyService.RemoveSpaceBodyAsync(id);
+            return NoContent();
         }
     }
 }

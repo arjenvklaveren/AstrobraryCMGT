@@ -17,5 +17,5 @@ public class RingSystem
     public int SpaceBodyId { get; set; }
     [ForeignKey(nameof(SpaceBodyId))]
     [JsonIgnore]
-    public SpaceBody SpaceBody { get; set; } = null!;
+    public SpaceBody? SpaceBody { get; set; } = null!;
 }

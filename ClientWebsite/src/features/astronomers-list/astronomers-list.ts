@@ -46,7 +46,6 @@ export class AstronomersList implements OnInit {
   }
 
   openDialog(astronomer: Astronomer, isEdit: boolean) {
-    let initialAstronomer = {...astronomer};
     this.dialog.open(ObjectDialog, {
       data: {
         component: AstronomerDialogPartial,
@@ -58,31 +57,25 @@ export class AstronomersList implements OnInit {
     .afterClosed().subscribe((result) => {
       this.cdr.detectChanges(); 
 
-      if(result.inputIsDeleted) {
-
-        this.astronomerService.removeAstronomer(astronomer.id!).subscribe(() => {
-          
-        });
-
+      if(result?.inputIsDeleted!) {
         this.astronomers.update(astronomers =>
           astronomers.filter(a => a.id !== astronomer.id)
         );
       }
-      else {
-        if (JSON.stringify(initialAstronomer) !== JSON.stringify(astronomer)) {
-          this.astronomers.update(astronomers =>
-            astronomers.map(obj =>
-              obj.id === astronomer.id ? astronomer : obj
-            )
-          );
-        }
+
+      if(result?.inputIsSubmitted!) {
+        this.astronomers.update(astronomers =>
+          astronomers.map(obj =>
+            obj.id === astronomer.id ? astronomer : obj
+          )
+        );   
       }
+      
     });
   }
 
   onAddNewAstronomer(astronomer: Astronomer) {
     this.astronomers.update(astronomers => [...astronomers, astronomer]);
   }
-
 }
 

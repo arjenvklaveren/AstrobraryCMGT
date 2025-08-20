@@ -14,14 +14,15 @@ import { ObjectDialogObjectType } from '../../../types/ObjectDialogObjectType';
 })
 export class ObjectDialog implements OnInit {
   protected data = inject(MAT_DIALOG_DATA);
-  dialogRef = inject(MatDialogRef);
+  protected cdr = inject(ChangeDetectorRef);
 
   protected partialContentComponent = this.data.component;
   protected ObjectDialogViewType = ObjectDialogViewType;
   protected ObjectDialogObjectType = ObjectDialogObjectType;
   
   private inputObject: any = null;
-
+  
+  public dialogRef = inject(MatDialogRef);
   public inputObjectRef: any = null;
   public viewType: ObjectDialogViewType = ObjectDialogViewType.Unset;
   public OnConfirm = new EventEmitter<any>();
@@ -53,16 +54,17 @@ export class ObjectDialog implements OnInit {
 
   onDialogConfirm() {
     this.OnConfirm.emit();
-    this.updateSourceInputObject();
+    if(this.viewType == ObjectDialogViewType.View){
+      this.dialogRef.close();
+    }
   }
 
   onDialogDelete() {
-    this.dialogRef.close( { inputIsDeleted: true });
     this.OnDelete.emit();
-    this.updateSourceInputObject();
   }
 
   updateSourceInputObject() {
+    this.cdr.detectChanges();
     if (this.inputObject != null) {
       setTimeout(() => {
         Object.assign(this.inputObject, this.inputObjectRef);

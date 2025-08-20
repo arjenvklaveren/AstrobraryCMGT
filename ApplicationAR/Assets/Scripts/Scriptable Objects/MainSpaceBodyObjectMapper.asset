@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa8c4f6517ab58c499774a23c8a28424, type: 3}
+  m_Name: MainSpaceBodyObjectMapper
+  m_EditorClassIdentifier: 
+  mapperObjects:
+  - type: 0
+    textures:
+    - {fileID: 2800000, guid: 56391bc34bd770444962faeca9f6cef2, type: 3}
+    material: {fileID: 2100000, guid: 58eeef8d39c45804ab5ce31f6155f940, type: 2}
+  - type: 1
+    textures:
+    - {fileID: 2800000, guid: 7256e32f087564244bc7224cb9fddadf, type: 3}
+    material: {fileID: 2100000, guid: 58eeef8d39c45804ab5ce31f6155f940, type: 2}
+  - type: 2
+    textures:
+    - {fileID: 2800000, guid: 7b0e71d0d6494b543832e127bfb28bc9, type: 3}
+    material: {fileID: 2100000, guid: 58eeef8d39c45804ab5ce31f6155f940, type: 2}
+  - type: 3
+    textures:
+    - {fileID: 2800000, guid: a88ec3367972f1740a3b00ec938daa7e, type: 3}
+    material: {fileID: 2100000, guid: 58eeef8d39c45804ab5ce31f6155f940, type: 2}
+  - type: 4
+    textures:
+    - {fileID: 2800000, guid: 2441e385f3bafa44bac7a395671f0254, type: 3}
+    material: {fileID: 2100000, guid: 58eeef8d39c45804ab5ce31f6155f940, type: 2}
+  - type: 5
+    textures:
+    - {fileID: 2800000, guid: 0d5021c6d9b607f4e871a3cb63e6486a, type: 3}
+    material: {fileID: 2100000, guid: 58eeef8d39c45804ab5ce31f6155f940, type: 2}
+  - type: 6
+    textures:
+    - {fileID: 2800000, guid: 1ff662fe302461b4f9c12a29b6ea0b7e, type: 3}
+    material: {fileID: 2100000, guid: 58eeef8d39c45804ab5ce31f6155f940, type: 2}
+  - type: 7
+    textures:
+    - {fileID: 2800000, guid: cf04b622411363d4e99f895882fd00c4, type: 3}
+    material: {fileID: 2100000, guid: 58eeef8d39c45804ab5ce31f6155f940, type: 2}
+  - type: 8
+    textures:
+    - {fileID: 2800000, guid: 0391147c9001cc141bc44fdd68632704, type: 3}
+    material: {fileID: 2100000, guid: 58eeef8d39c45804ab5ce31f6155f940, type: 2}

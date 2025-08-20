@@ -12,7 +12,7 @@ public class SpaceBody
     public int DiscovererId { get; set; }
     public int Age { get; set; }
     public string ImageUrl { get; set; }
-    public int ParentId { get; set; }
+    public int? ParentId { get; set; } 
     public SpaceBodyType Type { get; set; }
     public string MainInfo { get; set; }
     public string SubInfo { get; set; }
@@ -37,7 +37,13 @@ public class SpaceBody
 
 public enum SpaceBodyType
 {
-    Moon,
-    Planet,
-    Star,
+    PlanetRock,
+    PlanetSand,
+    PlanetOcean,
+    PlanetGrass,
+    StarNeutron,
+    StarDwarf,
+    StarGiant,
+    MoonRegular,
+    MoonIrregular,
 }

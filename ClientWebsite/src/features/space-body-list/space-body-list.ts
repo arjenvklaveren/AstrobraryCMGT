@@ -98,7 +98,7 @@ export class SpaceBodyList implements OnInit {
   }
 
   openEditDialog(spaceBody: SpaceBody) {
-    var initialSpaceBody = {...spaceBody};
+    var initialParentId = spaceBody.parentId;
     this.dialog.open(ObjectDialog, {
       data: {
         component: SpaceBodyDialogPartial,
@@ -110,25 +110,21 @@ export class SpaceBodyList implements OnInit {
     .afterClosed().subscribe((result) => {
       this.cdr.detectChanges();
 
-      if(result.inputIsDeleted) {
-        let removeIds = this.getAllLowerHierarchyIds(spaceBody.id);
+      if(result?.inputIsDeleted!) {
+        let removeIds = this.getAllLowerHierarchyIds(spaceBody.id!);
         this.spaceBodies.update(bodies =>
           bodies.filter(body => !removeIds.includes(body.id!))
         );
-
         this.transformDataToHierarchy();
       }
-      else {
-        if (JSON.stringify(initialSpaceBody) !== JSON.stringify(spaceBody)) {
+
+      if(result?.inputIsSubmitted!) {
           this.spaceBodies.update(bodies =>
-            bodies.map(obj =>
-              obj.id === spaceBody.id ? spaceBody : obj
-            )
+            bodies.map(obj => obj.id === spaceBody.id ? spaceBody : obj)
           );
-          if (spaceBody.parentId != initialSpaceBody.parentId) {
+          if (spaceBody.parentId != initialParentId) {
             this.transformDataToHierarchy();
           }
-        }
       }
     });
   }
@@ -140,7 +136,7 @@ export class SpaceBodyList implements OnInit {
 
     children.forEach((child => {
       allIds.push(child.id!); 
-      allIds.push(...this.getAllLowerHierarchyIds(child.id));
+      allIds.push(...this.getAllLowerHierarchyIds(child.id!));
     }));
 
     return allIds;

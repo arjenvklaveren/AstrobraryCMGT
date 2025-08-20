@@ -12,7 +12,8 @@
                 [(ngModel)]="filterParamsAny[paramField.key]" placeholder="{{paramField.label}}">
         }
         @if(paramField.type === TypeDetect.BoolType) {
-            <select #sel (change)="onFilterChange()" [(ngModel)]="filterParamsAny[paramField.key]">
+            <select #sel (change)="onFilterChange()" [(ngModel)]="filterParamsAny[paramField.key]"
+                matTooltip="{{filterParamsAny[paramField.key] != undefined ? paramField.label : ''}}">
                 <option [ngValue]="undefined" disabled selected hidden>{{paramField.label}}</option>
                 @if(filterParamsAny[paramField.key] != undefined) { <option [ngValue]="undefined">-</option> }
                 <option [ngValue]="true">Yes</option>
@@ -21,7 +22,8 @@
         }
         
         @if(paramField.isEnum == true) {           
-            <select (change)="onFilterChange()" [(ngModel)]="filterParamsAny[paramField.key]">
+            <select (change)="onFilterChange()" [(ngModel)]="filterParamsAny[paramField.key]"
+                matTooltip="{{filterParamsAny[paramField.key] != undefined ? paramField.label : ''}}">
                 <option [ngValue]="undefined" disabled selected hidden>{{paramField.label}}</option>
                 @if(filterParamsAny[paramField.key] != undefined) { <option [ngValue]="undefined">-</option> }
             @for (option of getEnumValues(paramField.type); track option) {
