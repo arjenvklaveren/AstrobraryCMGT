@@ -321,6 +321,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectButton: {fileID: 7748929998338339106}
+  spaceBodyImage: {fileID: 7000948572339208443}
   bodyNameText: {fileID: 9117843504444334226}
   astronomerNameText: {fileID: 0}
   childrenAmountText: {fileID: 0}

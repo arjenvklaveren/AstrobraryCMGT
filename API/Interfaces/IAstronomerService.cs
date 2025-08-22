@@ -11,4 +11,5 @@ public interface IAstronomerService
     Task<int?> AddAstronomerAsync(Astronomer astronomer);
     Task<Astronomer> UpdateAstronomerAsync(Astronomer astronomer);
     Task RemoveAstronomerAsync(int id);
+    Task<string> SetAstronomerImage(IFormFile file, int id);
 }

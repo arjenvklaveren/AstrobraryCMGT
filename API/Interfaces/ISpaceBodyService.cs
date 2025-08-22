@@ -16,4 +16,6 @@ public interface ISpaceBodyService
     Task<int?> AddSpaceBodyAsync(SpaceBodyDTO spaceBody);
     Task<SpaceBodyDTO> UpdateSpaceBodyAsync(SpaceBodyDTO spaceBody);
     Task RemoveSpaceBodyAsync(int id);
+
+    Task<string> SetAstronomerImage(IFormFile file, int id);
 }

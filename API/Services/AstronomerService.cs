@@ -5,7 +5,7 @@ using API.Interfaces;
 
 namespace API.Services;
 
-public class AstronomerService(IAstronomerRepository astronomerRepository) : IAstronomerService
+public class AstronomerService(IAstronomerRepository astronomerRepository, IObjectImageService objectImageService) : IAstronomerService
 {
     public async Task<IReadOnlyList<Astronomer>> GetAllAstronomersAsync(AstronomerFilterParams filterParams)
     {
@@ -32,5 +32,19 @@ public class AstronomerService(IAstronomerRepository astronomerRepository) : IAs
     public async Task RemoveAstronomerAsync(int id)
     {
         await astronomerRepository.RemoveAsync(id);
+    }
+
+    public async Task<string> SetAstronomerImage(IFormFile file, int id)
+    {
+        var astronomer = await astronomerRepository.GetByIdAsync(id);
+        if (astronomer == null) return "";
+
+        var publicImageId = objectImageService.GetPublicId(astronomer);
+        var imageUploadResult = await objectImageService.SetImageAsync(file, publicImageId);
+        if (imageUploadResult.Error != null) return astronomer.ImageUrl!;
+
+        astronomer.ImageUrl = imageUploadResult.SecureUrl.AbsoluteUri;
+        await astronomerRepository.UpdateAsync(astronomer);
+        return imageUploadResult.SecureUrl.AbsoluteUri;
     }
 }

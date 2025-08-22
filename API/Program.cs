@@ -1,4 +1,5 @@
 using API.Data;
+using API.Helpers;
 using API.Interfaces;
 using API.Repositories;
 using API.Services;
@@ -15,6 +16,10 @@ builder.Services.AddScoped<ISpaceBodyService, SpaceBodyService>();
 builder.Services.AddScoped<IAstronomerRepository, AstronomerRepository>();
 builder.Services.AddScoped<IAstronomerService, AstronomerService>();
 
+builder.Services.AddScoped<IObjectImageService, ObjectImageService>();
+
+builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
+
 builder.Services.AddDbContext<DatabaseContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
@@ -23,7 +28,7 @@ builder.Services.AddDbContext<DatabaseContext>(options =>
 var app = builder.Build();
 
 app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod()
-.WithOrigins("http://localhost:4200", "https://localhost:4200"));
+.WithOrigins("http://localhost:4200", "https://localhost:4200", "http://192.168.2.21:4200"));
 
 app.MapControllers();
 

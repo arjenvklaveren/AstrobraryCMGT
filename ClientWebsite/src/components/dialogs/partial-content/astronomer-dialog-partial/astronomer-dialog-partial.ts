@@ -17,8 +17,8 @@ import { MatDialogClose } from '@angular/material/dialog';
   templateUrl: './astronomer-dialog-partial.html',
   styleUrl: './astronomer-dialog-partial.scss'
 })
-export class AstronomerDialogPartial implements OnInit{
-  protected dialogMain = inject(ObjectDialog); 
+export class AstronomerDialogPartial implements OnInit {
+  protected dialogMain = inject(ObjectDialog);
   protected cdr = inject(ChangeDetectorRef);
   astronomerService = inject(AstronomerService);
 
@@ -28,44 +28,89 @@ export class AstronomerDialogPartial implements OnInit{
   ObjectDialogViewType = ObjectDialogViewType;
   AstronomerOccupation = AstronomerOccupation;
 
+  protected updatedImageFile: File | null = null;
+  selectedImageData: string | ArrayBuffer | null = null;
+
   ngOnInit(): void {
     this.dialogMain.OnConfirm.subscribe(() => this.onSubmit());
     this.dialogMain.OnDelete.subscribe(() => this.onDelete());
 
-    if(this.dialogMain.inputObjectRef != null) this.astronomer = this.dialogMain.inputObjectRef;
+    if (this.dialogMain.inputObjectRef != null) this.astronomer = this.dialogMain.inputObjectRef;
     else this.astronomer = getAstronomerDefault();
 
-    if(this.astronomer?.id != null) this.astronomerService.getDiscoveries(this.astronomer?.id).subscribe({
+    if (this.astronomer?.id != null) this.astronomerService.getDiscoveries(this.astronomer?.id).subscribe({
       next: result => {
         this.discoveries.set(result);
       }
     })
   }
-  
+
   onSubmit() {
-    if(this.dialogMain.viewType == ObjectDialogViewType.Create) {
+    if (this.dialogMain.viewType == ObjectDialogViewType.Create) {
       this.astronomerService.addNewAstronomer(this.astronomer!).subscribe({
+
         next: newId => {
-          this.astronomer!.id = newId;
-          this.dialogMain.dialogRef.close( { inputIsSubmitted: true } );
-          this.dialogMain.updateSourceInputObject();
-          this.cdr.detectChanges();
+          const finalize = () => {
+            this.astronomer!.id = newId;
+            this.dialogMain.dialogRef.close({ inputIsSubmitted: true });
+            this.dialogMain.updateSourceInputObject();
+            this.cdr.detectChanges();
+          };
+
+          if (this.updatedImageFile != null) {
+            this.astronomerService.setAstronomerImage(newId, this.updatedImageFile).subscribe((imgUrl) => {
+              this.astronomer!.imageUrl = imgUrl;
+              finalize();
+            });
+          } else {
+            finalize();
+          }
         }
+
       });
     }
-    else if(this.dialogMain.viewType == ObjectDialogViewType.Edit) {
+
+    else if (this.dialogMain.viewType == ObjectDialogViewType.Edit) {
       this.astronomerService.updateAstronomer(this.astronomer!).subscribe(() => {
-        this.dialogMain.dialogRef.close( { inputIsSubmitted: true } );
-        this.dialogMain.updateSourceInputObject();
-        this.cdr.detectChanges();
+
+        const finalize = () => {
+          this.dialogMain.dialogRef.close({ inputIsSubmitted: true });
+          this.dialogMain.updateSourceInputObject();
+          this.cdr.detectChanges();
+        };
+
+        if (this.updatedImageFile != null) {
+          this.astronomerService.setAstronomerImage(this.astronomer!.id!, this.updatedImageFile).subscribe((imgUrl) => {
+            this.astronomer!.imageUrl = imgUrl;
+            finalize();
+          });
+        } else {
+          finalize();
+        }
+
       });
     }
   }
 
   onDelete() {
     this.astronomerService.removeAstronomer(this.astronomer!.id!).subscribe(() => {
-      this.dialogMain.dialogRef.close( { inputIsDeleted: true } );
+      this.dialogMain.dialogRef.close({ inputIsDeleted: true });
     });
+  }
+
+  onSelectFile(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.updatedImageFile = input.files[0];
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.astronomer!.imageUrl = reader.result as string;
+        this.cdr.detectChanges();
+      };
+
+      reader.readAsDataURL(input.files[0]);
+    }
   }
 
   getEnumValues(inputEnum: any) {

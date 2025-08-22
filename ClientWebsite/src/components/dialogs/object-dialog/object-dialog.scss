@@ -53,6 +53,8 @@
                 .picture-container {
                     img {
                         width: 80%;
+                        object-fit: cover;
+                        aspect-ratio: 1/1;
                     }
                 }
             }

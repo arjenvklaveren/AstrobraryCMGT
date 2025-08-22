@@ -6,9 +6,11 @@ using TMPro;
 
 public class ObjectScreen : ScreenUI
 {
-    [SerializeField] TextMeshProUGUI objectNameText;
     [SerializeField] private SpaceBodyListItem spaceBodyItemSmallPrefab;
     [SerializeField] private SetInformationAreaValues setInformationAreaValues;
+
+    [SerializeField] TextMeshProUGUI objectNameText;
+    [SerializeField] Image objectBodyImage;
 
     [SerializeField] Button selectButton;
 
@@ -43,7 +45,15 @@ public class ObjectScreen : ScreenUI
         setInformationAreaValues.SetSpaceBodyValues(refSpaceBody);
         //setInformationAreaValues.SetAstronomerValues();
 
+        if(refSpaceBody.ImageTexture != null)
+        {
+            Texture2D tex = refSpaceBody.ImageTexture;
+            Sprite sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f));
+            objectBodyImage.sprite = sprite;
+        }
+
         SpaceBodyListItem newSpaceBodyListItem = Instantiate(spaceBodyItemSmallPrefab, hierarchylistContentHolder.transform);
+        await HttpController.Instance.LoadSpaceBodyImage(hierarchySpaceBody);
         newSpaceBodyListItem.InstantiateItem(hierarchySpaceBody);
         InstantiateHierarchyElements(hierarchySpaceBody.Children, 1);
     }
@@ -52,7 +62,7 @@ public class ObjectScreen : ScreenUI
     {
         OverlayScreen overlayScreen = ScreenManager.Instance.GetMainCanvasGameObject().GetComponentInChildren<OverlayScreen>(true);
         SpaceBodyManager.Instance.SetupScene(hierarchySpaceBody, refSpaceBody);
-        overlayScreen.Open();
+        overlayScreen.Open(hierarchySpaceBody);
     }
 
     void ClearListContent()
@@ -71,11 +81,12 @@ public class ObjectScreen : ScreenUI
         }
     }
 
-    void InstantiateHierarchyElements(List<SpaceBody> children, int depth)
+    async void InstantiateHierarchyElements(List<SpaceBody> children, int depth)
     {
         foreach(SpaceBody child in children)
         {
             SpaceBodyListItem newSpaceBodyListItem = Instantiate(spaceBodyItemSmallPrefab, hierarchylistContentHolder.transform);
+            await HttpController.Instance.LoadSpaceBodyImage(child);
             newSpaceBodyListItem.InstantiateItem(child);
             newSpaceBodyListItem.SetPaddingLeft(100 * depth);
             InstantiateHierarchyElements(child.Children, depth + 1);

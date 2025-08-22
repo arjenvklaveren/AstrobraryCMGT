@@ -62,9 +62,9 @@
 
         <div class="picture-container">
             <h3>Image:</h3>
-            <img src="{{astronomer.imageUrl || 'placeholder-square.png'}}" alt="">
+            <img [src]="astronomer.imageUrl || 'placeholder-square.png'" alt="">
             @if(dialogMain.viewType == ObjectDialogViewType.Edit || dialogMain.viewType == ObjectDialogViewType.Create) {
-                <input type="file">
+                <input (change)="onSelectFile($event)" type="file">
             } 
         </div>   
 

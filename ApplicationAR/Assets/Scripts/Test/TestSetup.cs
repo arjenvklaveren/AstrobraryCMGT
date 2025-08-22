@@ -77,7 +77,7 @@ public class TestSetup : MonoBehaviour
                         ""diameter"": 160,
                         ""velocity"": 200,
                         ""temperature"": 40,
-                        ""distanceFromParent"": 100,
+                        ""distanceFromParent"": 50,
                         ""rotationAngle"": 0,
                         ""rotationSpeed"": 40,
                         ""atmosphereThickness"": 11,

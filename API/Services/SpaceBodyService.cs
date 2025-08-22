@@ -7,7 +7,7 @@ using API.Interfaces;
 
 namespace API.Services;
 
-public class SpaceBodyService(ISpaceBodyRepository spaceBodyRepository) : ISpaceBodyService
+public class SpaceBodyService(ISpaceBodyRepository spaceBodyRepository, IObjectImageService objectImageService) : ISpaceBodyService
 {
     public async Task<IReadOnlyList<SpaceBodyDTO>> GetAllBodiesAsync(SpaceBodyFilterParams filterParams)
     {
@@ -58,7 +58,7 @@ public class SpaceBodyService(ISpaceBodyRepository spaceBodyRepository) : ISpace
         foreach (SpaceBody child in children)
         {
             SpaceBodyDTO childDTO = child.ToDTO();
-            childDTO = await BuildSpaceBodyHierarchyDTO(childDTO);            
+            childDTO = await BuildSpaceBodyHierarchyDTO(childDTO);
             spaceBodyDTO.Children.Add(childDTO);
         }
 
@@ -67,7 +67,7 @@ public class SpaceBodyService(ISpaceBodyRepository spaceBodyRepository) : ISpace
 
     public async Task<IReadOnlyList<SpaceBodyDTO>> GetAllBodiesOfAstronomer(int astronomerId)
     {
-         var bodies = await spaceBodyRepository.GetAllFromAstronomer(astronomerId!);
+        var bodies = await spaceBodyRepository.GetAllFromAstronomer(astronomerId!);
 
         return bodies
             .Select(body => body.ToDTO())
@@ -84,11 +84,25 @@ public class SpaceBodyService(ISpaceBodyRepository spaceBodyRepository) : ISpace
     {
         SpaceBody body = spaceBody.FromDto();
         await spaceBodyRepository.UpdateAsync(body);
-        return body.ToDTO(); 
+        return body.ToDTO();
     }
 
     public async Task RemoveSpaceBodyAsync(int id)
     {
         await spaceBodyRepository.RemoveAsync(id);
+    }
+
+    public async Task<string> SetAstronomerImage(IFormFile file, int id)
+    {
+        var spaceBody = await spaceBodyRepository.GetByIdAsync(id);
+        if (spaceBody == null) return "";
+
+        var publicImageId = objectImageService.GetPublicId(spaceBody);
+        var imageUploadResult = await objectImageService.SetImageAsync(file, publicImageId);
+        if (imageUploadResult.Error != null) return spaceBody.ImageUrl!;
+
+        spaceBody.ImageUrl = imageUploadResult.SecureUrl.AbsoluteUri;
+        await spaceBodyRepository.UpdateAsync(spaceBody);
+        return imageUploadResult.SecureUrl.AbsoluteUri;
     }
 }

@@ -65,7 +65,7 @@ public class SpaceBodyRepository(DatabaseContext context) : ISpaceBodyRepository
 
     public async Task<SpaceBody> AddAsync(SpaceBody spaceBody)
     {
-        context.Add(spaceBody);
+        context.SpaceBodies.Add(spaceBody);
         await context.SaveChangesAsync();
         return spaceBody;
     }

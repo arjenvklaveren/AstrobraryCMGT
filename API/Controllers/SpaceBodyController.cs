@@ -40,7 +40,7 @@ namespace API.Controllers
 
             return Ok(spaceBodyDTO);
         }
-        
+
         [HttpPost("add")]
         public async Task<ActionResult<int>> AddSpaceBody(SpaceBodyDTO spaceBody)
         {
@@ -53,11 +53,18 @@ namespace API.Controllers
             return Ok(await spaceBodyService.UpdateSpaceBodyAsync(spaceBody));
         }
 
-        [HttpDelete("delete/{id}")]
+        [HttpDelete("{id}/delete")]
         public async Task<ActionResult> RemoveSpaceBody(int id)
         {
             await spaceBodyService.RemoveSpaceBodyAsync(id);
             return NoContent();
+        }
+        
+        [HttpPost("{id}/set-image")]
+        public async Task<ActionResult<string>> SetSpaceBodyImageById(int id, [FromForm] IFormFile file)
+        {
+            var urlResult = await spaceBodyService.SetAstronomerImage(file, id);
+            return Ok(urlResult);
         }
     }
 }

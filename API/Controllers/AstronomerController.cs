@@ -9,7 +9,7 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AstronomerController(IAstronomerService astronomerService, ISpaceBodyService spaceBodyService) : ControllerBase
+    public class AstronomerController(IAstronomerService astronomerService,ISpaceBodyService spaceBodyService) : ControllerBase
     {
         [HttpGet]
         public async Task<ActionResult<IReadOnlyList<Astronomer>>> GetAllAstronomersAsync([FromQuery] AstronomerFilterParams filterParams)
@@ -33,7 +33,7 @@ namespace API.Controllers
 
         [HttpPost("add")]
         public async Task<ActionResult<int>> AddAstronomer(Astronomer astronomer)
-        {         
+        {
             return Ok(await astronomerService.AddAstronomerAsync(astronomer));
         }
 
@@ -43,11 +43,18 @@ namespace API.Controllers
             return Ok(await astronomerService.UpdateAstronomerAsync(astronomer));
         }
 
-        [HttpDelete("delete/{id}")]
+        [HttpDelete("{id}/delete")]
         public async Task<ActionResult> RemoveAstronomer(int id)
         {
             await astronomerService.RemoveAstronomerAsync(id);
             return NoContent();
+        }
+
+        [HttpPost("{id}/set-image")]
+        public async Task<ActionResult<string>> SetAstronomerImageById(int id, [FromForm] IFormFile file)
+        {
+            var urlResult = await astronomerService.SetAstronomerImage(file, id);
+            return Ok(urlResult);
         }
     }
 }

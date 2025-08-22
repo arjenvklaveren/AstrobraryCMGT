@@ -30,6 +30,9 @@ export class SpaceBodyDialogPartial implements OnInit{
 
   ObjectDialogViewType = ObjectDialogViewType;
   SpaceBodyType = SpaceBodyType;
+
+  protected updatedImageFile: File | null = null;
+  selectedImageData: string | ArrayBuffer | null = null;
   
   ngOnInit(): void {
     this.dialogMain.OnConfirm.subscribe(() => this.onSubmit());
@@ -69,20 +72,50 @@ export class SpaceBodyDialogPartial implements OnInit{
   onSubmit() {
     if(this.dialogMain.viewType == ObjectDialogViewType.Create) {
       this.spacebodyService.addNewBody(this.spaceBody!).subscribe({
+
         next: newId => {
-          this.spaceBody!.id = newId;
-          this.dialogMain.dialogRef.close( { inputIsSubmitted: true } );
-          this.dialogMain.updateSourceInputObject();
-          this.cdr.detectChanges();
+
+          const finalize = () => {
+            this.spaceBody!.id = newId;
+            this.dialogMain.dialogRef.close({ inputIsSubmitted: true });
+            this.dialogMain.updateSourceInputObject();
+            this.cdr.detectChanges();
+          };
+
+          if (this.updatedImageFile != null) {
+            this.spacebodyService.setSpaceBodyImage(this.spaceBody!.id!, this.updatedImageFile).subscribe((imgUrl) => {
+              this.spaceBody!.imageUrl = imgUrl;
+              finalize();
+            });
+          } else {
+            finalize();
+          }
+
         }
+
       });
     }
     else if(this.dialogMain.viewType == ObjectDialogViewType.Edit) {
+
       this.spacebodyService.updateBody(this.spaceBody!).subscribe(() => {
-        this.dialogMain.dialogRef.close( { inputIsSubmitted: true } );
-        this.dialogMain.updateSourceInputObject();
-        this.cdr.detectChanges();
+
+        const finalize = () => {
+          this.dialogMain.dialogRef.close({ inputIsSubmitted: true });
+          this.dialogMain.updateSourceInputObject();
+          this.cdr.detectChanges();
+        };
+
+        if (this.updatedImageFile != null) {
+          this.spacebodyService.setSpaceBodyImage(this.spaceBody!.id!, this.updatedImageFile).subscribe((imgUrl) => {
+            this.spaceBody!.imageUrl = imgUrl;
+            finalize();
+          });
+        } else {
+          finalize();
+        }
+
       });
+
     }
   }
 
@@ -90,6 +123,21 @@ export class SpaceBodyDialogPartial implements OnInit{
     this.spacebodyService.removeBody(this.spaceBody!.id!).subscribe(() => {
         this.dialogMain.dialogRef.close( { inputIsDeleted: true } );
     });
+  }
+
+    onSelectFile(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.updatedImageFile = input.files[0];
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.spaceBody!.imageUrl = reader.result as string;
+        this.cdr.detectChanges();
+      };
+
+      reader.readAsDataURL(input.files[0]);
+    }
   }
 
   getEnumValues(inputEnum: any) {

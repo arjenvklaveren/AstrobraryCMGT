@@ -9,7 +9,7 @@ public class HttpController : MonoBehaviour
 {
     public static HttpController Instance { get; private set; }
 
-    private string baseUrl = "http://localhost:5025/api/";
+    private string baseUrl = "http://192.168.2.21:5025/api/";
 
     private void Awake()
     {
@@ -44,6 +44,12 @@ public class HttpController : MonoBehaviour
                 };
 
                 List<SpaceBody> spaceBodies = JsonConvert.DeserializeObject<List<SpaceBody>>(webRequest.downloadHandler.text, settings);
+                
+                foreach(SpaceBody spaceBody in spaceBodies)
+                {
+                    await LoadSpaceBodyImage(spaceBody);
+                }
+
                 return spaceBodies;
             }
         }
@@ -72,6 +78,27 @@ public class HttpController : MonoBehaviour
 
                 SpaceBody hierarchySpaceBody = JsonConvert.DeserializeObject<SpaceBody>(webRequest.downloadHandler.text, settings);
                 return hierarchySpaceBody;
+            }
+        }
+    }
+
+    public async Task LoadSpaceBodyImage(SpaceBody spaceBody) 
+    {
+        if (spaceBody.ImageUrl == "" || spaceBody.ImageUrl == null) return;
+        using (UnityWebRequest request = UnityWebRequestTexture.GetTexture(spaceBody.ImageUrl))
+        {
+            var operation = request.SendWebRequest();
+            while (!operation.isDone) await Task.Yield();
+
+            if (request.result == UnityWebRequest.Result.ConnectionError ||
+                request.result == UnityWebRequest.Result.ProtocolError)
+            {
+                Debug.LogError("Failed to load image: " + request.error);
+            }
+            else
+            {
+                Texture2D texture = ((DownloadHandlerTexture)request.downloadHandler).texture;
+                spaceBody.ImageTexture = texture;
             }
         }
     }

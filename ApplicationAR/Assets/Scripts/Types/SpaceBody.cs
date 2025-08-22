@@ -33,6 +33,9 @@ public class SpaceBody
     public RingSystem RingSystem { get; set; }
 
     public List<SpaceBody> Children { get; set; }
+
+    //Additional properties
+    public Texture2D ImageTexture { get; set; }
 }
 
 public enum SpaceBodyType

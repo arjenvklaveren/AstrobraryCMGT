@@ -39,10 +39,16 @@ export class AstronomerService {
   }
 
   removeAstronomer(astronomerId: number) {
-    return this.http.delete<Astronomer>(this.baseUrl + "astronomer/delete/" + astronomerId);
+    return this.http.delete<Astronomer>(this.baseUrl + "astronomer/" + astronomerId + "/delete");
   }
 
   getDiscoveries(astronomerId: number) {
     return this.http.get<SpaceBody[]>(this.baseUrl + "astronomer/" + astronomerId + "/discoveries");
+  }
+
+  setAstronomerImage(astronomerId: number, file: File) {
+    const formData = new FormData();
+    formData.append('file', file);
+    return this.http.post(this.baseUrl + "astronomer/" + astronomerId + "/set-image",formData,{ responseType: 'text' });
   }
 }

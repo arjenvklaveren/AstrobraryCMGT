@@ -34,7 +34,7 @@ export class SpacebodyService {
 
     addNewBody(spaceBody: SpaceBody) {
       delete spaceBody.id;
-      if(spaceBody.ringSystem) delete spaceBody.ringSystem.id;
+      if(spaceBody.ringSystem != null) delete spaceBody.ringSystem.id;
 
       return this.http.post<number>(this.baseUrl + "spacebody/add", spaceBody);
     }
@@ -45,6 +45,12 @@ export class SpacebodyService {
     }
 
     removeBody(spaceBodyId: number) {
-      return this.http.delete<SpaceBody>(this.baseUrl + "spacebody/delete/" + spaceBodyId);
+      return this.http.delete<SpaceBody>(this.baseUrl + "spacebody/" + spaceBodyId + "/delete");
+    }
+
+    setSpaceBodyImage(spaceBodyId: number, file: File) {
+      const formData = new FormData();
+      formData.append('file', file);
+      return this.http.post(this.baseUrl + "spacebody/" + spaceBodyId + "/set-image",formData,{ responseType: 'text' });
     }
 }
